@@ -1,0 +1,48 @@
+@import "fonts";
+@import "variables";
+@import "element-ui";
+
+* {
+  &, &:after, &:before {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  font-size: 12px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-width: 320px;
+  font-family: var(--font-family-default);
+  font-weight: 400;
+  color: var(--color-text-page);
+  background: var(--background-page);
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 0 20px;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+h1, h2, h3, a {
+  font-weight: 600;
+  font-size: inherit;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+a {
+  color: var(--color-text-link);
+  text-decoration: none;
+}

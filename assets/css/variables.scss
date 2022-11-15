@@ -1,0 +1,87 @@
+:root {
+  --size-gap: 20px;
+
+  --z-index-header: 1;
+  --z-index-motto: 1;
+  --z-index-overlay: 1000;
+
+  --font-family-default: "VelaSans", sans-serif;
+
+  --color-black: #000;
+  --color-black-opac50: rgba(0, 0, 0, .5);
+  --color-black-opac70: rgba(0, 0, 0, .7);
+  --color-white: #fff;
+  --color-white-opac10: rgba(255, 255, 255, .1);
+  --color-white-opac20: rgba(255, 255, 255, .2);
+  --color-white-opac50: rgba(255, 255, 255, .5);
+  --color-white-opac60: rgba(255, 255, 255, .6);
+  --color-white-opac70: rgba(255, 255, 255, .7);
+  --color-purple: #8331DA;
+  --color-purple-opac20: rgba(131, 49, 218, .2);
+  --color-purple-opac40: rgba(131, 49, 218, .4);
+  --color-purple-opac65: rgba(131, 49, 218, .65);
+  --color-orange: #F18D1E;
+  --color-orange-opac40: rgba(241, 141, 30, .4);
+  --color-green: #00A144;
+  --color-green-opac20: rgba(0, 161, 68, .2);
+  --color-grey-1: #1C1C1E;
+  --color-grey-1-opac20: rgba(28, 28, 30, .2);
+  --color-grey-2: #333334;
+  --color-red: #dc0000;
+
+  --color-gradient-blue: linear-gradient(99.72deg, #247FC5 0%, rgba(36, 127, 197, .5) 100%);
+  --color-gradient-green: linear-gradient(99.72deg, #77BA99 0%, rgba(119, 186, 153, .5) 100%);
+  --color-gradient-brown: linear-gradient(99.72deg, #AD8166 0%, rgba(173, 129, 102, .5) 100%);
+  --color-gradient-purple: linear-gradient(99.72deg, #7171E2 0%, rgba(113, 113, 226, .5) 100%);
+  --color-gradient-red-1: linear-gradient(99.72deg, #F15513 0%, rgba(241, 85, 19, .5) 100%);
+  --color-gradient-red-2: linear-gradient(99.72deg, #F15A69 0%, rgba(241, 90, 105, .5) 100%);
+  --color-gradient-purple-smoke:  linear-gradient(180deg, rgba(131, 49, 218, 0) 0%, rgba(131, 49, 218, 0.6) 100%);
+  --color-gradient-black-smoke:  linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 55.7%, #000000 100%);
+
+  --color-text-navigation: var(--color-white-opac70);
+  --color-text-navigation-active: var(--color-orange);
+  --color-text-page: var(--color-white);
+  --color-text-link: var(--color-orange);
+  --color-text-brand: var(--color-purple);
+  --color-text-button: var(--color-white);
+  --color-text-button-review: var(--color-green);
+  --color-text-button-contact: var(--color-purple);
+  --color-text-footer: var(--color-white-opac70);
+  --color-text-footer-active: var(--color-orange);
+  --color-text-input: var(--color-white);
+  --color-text-input-placeholder: var(--color-white-opac50);
+  --color-text-input-light: var(--color-grey-1);
+  --color-text-input-placeholder-light: var(--color-grey-1-opac20);
+
+  --background-page: var(--color-black);
+  --background-popup: var(--color-white);
+  --background-overlay: var(--color-black-opac70);
+  --background-button-brand: var(--color-purple);
+  --background-button-secondary: var(--color-orange);
+  --background-button-review: var(--color-green-opac20);
+  --background-button-contact: var(--color-purple-opac20);
+  --background-categories-hookah: var(--color-gradient-blue);
+  --background-categories-tea: var(--color-gradient-green);
+  --background-categories-coffee: var(--color-gradient-brown);
+  --background-categories-drinks: var(--color-gradient-purple);
+  --background-categories-desserts: var(--color-gradient-red-2);
+  --background-categories-snacks: var(--color-gradient-red-1);
+  --background-rule-number: var(--color-purple);
+  --background-input: var(--color-grey-1);
+  --background-input-light: var(--color-white);
+  --background-circle: var(--color-grey-1);
+
+  --border-radius-medium: 5px;
+  --border-radius-large: 10px;
+  --border-radius-rounded: 50%;
+
+  --shadow-button-primary: 0 10px 24px var(--color-purple-opac40);
+  --shadow-button-secondary: 0 10px 24px var(--color-orange-opac40);
+  --shadow-circle: 0 0 10px var(--color-purple-opac65);
+
+  --border-default: 1px solid var(--color-grey-1);
+  --border-default-dotted: 1px dotted var(--color-white-opac10);
+  --border-cms-default: 1px solid var(--color-white-opac20);
+  --border-circle: 2px solid var(--color-purple);
+  --border-input-light: 1px solid var(--color-grey-1-opac20);
+}
