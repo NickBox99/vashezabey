@@ -4,7 +4,7 @@ import {getPosElementDB} from "~/helpers";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.ICategory[]> {
-    return dispatch('cache/getUseCache', { key: 'categories-desserts-juices', fetchCallback: () => Vue.prototype.$fb.categories.desserts.juices.getAll() }, { root: true })
+    return dispatch('cache/getUseCache', { key: 'categories-beverages-juices', fetchCallback: () => Vue.prototype.$fb.categories.beverages.juices.getAll() }, { root: true })
   },
 
   async getById({ dispatch }: Database.IStore, id: string): Promise<Database.ICategory | undefined> {
@@ -13,7 +13,7 @@ export default {
   },
 
   async add({ commit }: Database.IStore, category: Database.ICategory) {
-    commit('cache/add', { key: 'categories-desserts-juices', value: await Vue.prototype.$fb.categories.desserts.juices.add(category) }, { root: true });
+    commit('cache/add', { key: 'categories-beverages-juices', value: await Vue.prototype.$fb.categories.beverages.juices.add(category) }, { root: true });
   },
 
   async update({ commit, dispatch }: Database.IStore, category: Database.ICategory) {
@@ -24,14 +24,14 @@ export default {
     }
 
     const newCategory = { ...findCat, ...category };
-    commit('cache/update', { key: 'categories-desserts-juices', value: newCategory}, { root: true });
-    Vue.prototype.$fb.categories.desserts.juices.update(newCategory);
+    commit('cache/update', { key: 'categories-beverages-juices', value: newCategory}, { root: true });
+    Vue.prototype.$fb.categories.beverages.juices.update(newCategory);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
-    await Vue.prototype.$fb.categories.desserts.juices.remove(id);
-    commit('cache/remove', { key: 'categories-desserts-juices', id }, { root: true });
+    await Vue.prototype.$fb.categories.beverages.juices.remove(id);
+    commit('cache/remove', { key: 'categories-beverages-juices', id }, { root: true });
   },
 
   async move({ dispatch }, { el, newPos }) {

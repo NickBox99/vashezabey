@@ -38,7 +38,7 @@ export default Vue.extend({
         {
           id: 4,
           name: 'Напитки',
-          type: 'drinks'
+          type: 'beverages'
         },
         {
           id: 5,
@@ -101,7 +101,7 @@ export default Vue.extend({
       background-image: url('~/assets/img/icons/categories/coffee.svg'), var(--background-categories-coffee);
     }
 
-    &_drinks {
+    &_beverages {
       background-image: url('~/assets/img/icons/categories/drinks.svg'), var(--background-categories-drinks);
     }
 

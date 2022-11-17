@@ -1,6 +1,6 @@
 <template>
   <cms-content
-    title-page="Щербет"
+    title-page="Мороженое"
     title-edit-popup="Форма меню"
     :data="categories"
     :model-edit-popup="formData"
@@ -94,10 +94,10 @@ import { Database } from "@/types";
 import {booleanConvert, replaceTextBr} from "~/helpers";
 
 export default Vue.extend({
-  name: "cms-categories-desserts-sherbets",
+  name: "cms-categories-desserts-ice-cream",
   layout: 'cms',
   async asyncData({ store }) {
-    await store.dispatch('database/categories/desserts/sherbets/getAll');
+    await store.dispatch('database/categories/desserts/ice-cream/getAll');
   },
   data() {
     return {
@@ -115,16 +115,16 @@ export default Vue.extend({
     booleanConvert,
     replaceTextBr,
     async addCategory() {
-      return await this.$store.dispatch('database/categories/desserts/sherbets/add', this.formData);
+      return await this.$store.dispatch('database/categories/desserts/ice-cream/add', this.formData);
     },
     async editCategory() {
-      return await this.$store.dispatch('database/categories/desserts/sherbets/update', this.formData);
+      return await this.$store.dispatch('database/categories/desserts/ice-cream/update', this.formData);
     },
     async removeCategory(id) {
-      await this.$store.dispatch('database/categories/desserts/sherbets/remove', id);
+      await this.$store.dispatch('database/categories/desserts/ice-cream/remove', id);
     },
     async moveCategory({ newPos, el }) {
-      await this.$store.dispatch('database/categories/desserts/sherbets/move', { newPos, el });
+      await this.$store.dispatch('database/categories/desserts/ice-cream/move', { newPos, el });
     },
     updateDataEditPopup(place: Database.ICategory) {
       if (place) {
@@ -146,7 +146,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      categories: 'database/categories/desserts/sherbets/getAll'
+      categories: 'database/categories/desserts/ice-cream/getAll'
     })
   }
 })

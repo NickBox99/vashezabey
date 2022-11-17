@@ -3,42 +3,35 @@ import Vue from "vue";
 import {getPosElementDB} from "~/helpers";
 
 export default {
-  async getAll({ dispatch }: Database.IStore): Promise<Database.IPlace[]> {
-    return dispatch('cache/getUseCache', { key: 'places', fetchCallback: () => Vue.prototype.$fb.places.getAll() }, { root: true })
+  async getAll({ dispatch }: Database.IStore): Promise<Database.ICategory[]> {
+    return dispatch('cache/getUseCache', { key: 'categories-coffee', fetchCallback: () => Vue.prototype.$fb.categories.coffee.getAll() }, { root: true })
   },
 
-  async getById({ dispatch }: Database.IStore, id: string): Promise<Database.IPlace | undefined> {
-    const places: Database.IPlace[] = await dispatch('getAll');
-    return places.find(place => place.id === id);
+  async getById({ dispatch }: Database.IStore, id: string): Promise<Database.ICategory | undefined> {
+    const result: Database.ICategory[] = await dispatch('getAll');
+    return result.find(cat => cat.id === id);
   },
 
-  async add({ commit }: Database.IStore, place: Database.IPlace) {
-    const newPlace = {
-      ...place,
-      phone: '',
-      reviewLink: '',
-      instagram: ''
-    };
-
-    commit('cache/add', { key: 'places', value: await Vue.prototype.$fb.places.add(newPlace) }, { root: true });
+  async add({ commit }: Database.IStore, category: Database.ICategory) {
+    commit('cache/add', { key: 'categories-coffee', value: await Vue.prototype.$fb.categories.coffee.add(category) }, { root: true });
   },
 
-  async update({ commit, dispatch }: Database.IStore, place: Database.IPlace) {
-    const findPlace = await dispatch('getById', place.id);
+  async update({ commit, dispatch }: Database.IStore, category: Database.ICategory) {
+    const findCat = await dispatch('getById', category.id);
 
-    if (!findPlace) {
+    if (!findCat) {
       return false;
     }
 
-    const newPlace = { ...findPlace, ...place };
-    commit('cache/update', { key: 'places', value: newPlace}, { root: true });
-    Vue.prototype.$fb.places.update(newPlace);
+    const newCategory = { ...findCat, ...category };
+    commit('cache/update', { key: 'categories-coffee', value: newCategory}, { root: true });
+    Vue.prototype.$fb.categories.coffee.update(newCategory);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
-    await Vue.prototype.$fb.places.remove(id);
-    commit('cache/remove', { key: 'places', id }, { root: true });
+    await Vue.prototype.$fb.categories.coffee.remove(id);
+    commit('cache/remove', { key: 'categories-coffee', id }, { root: true });
   },
 
   async move({ dispatch }, { el, newPos }) {

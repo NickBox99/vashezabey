@@ -4,7 +4,7 @@ import {getPosElementDB} from "~/helpers";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.ICategory[]> {
-    return dispatch('cache/getUseCache', { key: 'categories-desserts-cold-teas', fetchCallback: () => Vue.prototype.$fb.categories.desserts.coldTeas.getAll() }, { root: true })
+    return dispatch('cache/getUseCache', { key: 'categories-beverages-cold-teas', fetchCallback: () => Vue.prototype.$fb.categories.beverages.coldTeas.getAll() }, { root: true })
   },
 
   async getById({ dispatch }: Database.IStore, id: string): Promise<Database.ICategory | undefined> {
@@ -13,7 +13,7 @@ export default {
   },
 
   async add({ commit }: Database.IStore, category: Database.ICategory) {
-    commit('cache/add', { key: 'categories-desserts-cold-teas', value: await Vue.prototype.$fb.categories.desserts.coldTeas.add(category) }, { root: true });
+    commit('cache/add', { key: 'categories-beverages-cold-teas', value: await Vue.prototype.$fb.categories.beverages.coldTeas.add(category) }, { root: true });
   },
 
   async update({ commit, dispatch }: Database.IStore, category: Database.ICategory) {
@@ -24,14 +24,14 @@ export default {
     }
 
     const newCategory = { ...findCat, ...category };
-    commit('cache/update', { key: 'categories-desserts-cold-teas', value: newCategory}, { root: true });
-    Vue.prototype.$fb.categories.desserts.coldTeas.update(newCategory);
+    commit('cache/update', { key: 'categories-beverages-cold-teas', value: newCategory}, { root: true });
+    Vue.prototype.$fb.categories.beverages.coldTeas.update(newCategory);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
-    await Vue.prototype.$fb.categories.desserts.coldTeas.remove(id);
-    commit('cache/remove', { key: 'categories-desserts-cold-teas', id }, { root: true });
+    await Vue.prototype.$fb.categories.beverages.coldTeas.remove(id);
+    commit('cache/remove', { key: 'categories-beverages-cold-teas', id }, { root: true });
   },
 
   async move({ dispatch }, { el, newPos }) {

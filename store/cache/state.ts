@@ -16,7 +16,7 @@ export default (): Database.Store.IState => ({
 
 
 
-
+//@ts-ignore
   coffee: null,
   iceCream: null,
   sherbet: null,

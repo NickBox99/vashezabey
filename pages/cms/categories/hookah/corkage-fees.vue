@@ -1,6 +1,6 @@
 <template>
   <cms-content
-    title-page="Фруктовый"
+    title-page="Пробковый сбор"
     title-edit-popup="Форма меню"
     :data="categories"
     :model-edit-popup="formData"
@@ -94,10 +94,10 @@ import { Database } from "@/types";
 import {booleanConvert, replaceTextBr} from "~/helpers";
 
 export default Vue.extend({
-  name: "cms-categories-hookah-fruity",
+  name: "cms-categories-hookah-corkage-fees",
   layout: 'cms',
   async asyncData({ store }) {
-    await store.dispatch('database/categories/hookah/fruity/getAll');
+    await store.dispatch('database/categories/hookah/corkage-fees/getAll');
   },
   data() {
     return {
@@ -115,16 +115,16 @@ export default Vue.extend({
     booleanConvert,
     replaceTextBr,
     async addCategory() {
-      return await this.$store.dispatch('database/categories/hookah/fruity/add', this.formData);
+      return await this.$store.dispatch('database/categories/hookah/corkage-fees/add', this.formData);
     },
     async editCategory() {
-      return await this.$store.dispatch('database/categories/hookah/fruity/update', this.formData);
+      return await this.$store.dispatch('database/categories/hookah/corkage-fees/update', this.formData);
     },
     async removeCategory(id) {
-      await this.$store.dispatch('database/categories/hookah/fruity/remove', id);
+      await this.$store.dispatch('database/categories/hookah/corkage-fees/remove', id);
     },
     async moveCategory({ newPos, el }) {
-      await this.$store.dispatch('database/categories/hookah/fruity/move', { newPos, el });
+      await this.$store.dispatch('database/categories/hookah/corkage-fees/move', { newPos, el });
     },
     updateDataEditPopup(place: Database.ICategory) {
       if (place) {
@@ -146,7 +146,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      categories: 'database/categories/hookah/fruity/getAll'
+      categories: 'database/categories/hookah/corkage-fees/getAll'
     })
   }
 })

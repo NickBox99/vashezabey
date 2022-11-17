@@ -15,7 +15,7 @@
       <el-button type="success" size="small" @click="onOpenEditPopup(null)" v-if="!disableAdd">Добавить</el-button>
     </div>
 
-    <el-table border height="100%" :data="arrayElements">
+    <el-table border :data="arrayElements" height="calc(100% - 52px)">
       <el-table-column label="№" width="50">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
@@ -71,7 +71,7 @@ export default Vue.extend({
     },
     rulesEditPopup: {
       type: Array,
-      required: true
+      default: () => ([])
     },
     modelEditPopup: {
       type: Object,
@@ -178,7 +178,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .cms-content {
-  height: calc(100% - 40px);
+  height: 100%;
 
   &__header {
     display:flex;

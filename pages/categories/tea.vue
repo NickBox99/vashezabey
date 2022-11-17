@@ -24,10 +24,10 @@ export default Vue.extend({
   name: "tea",
   async asyncData({ store }) {
     return {
-      classicTeas: await store.dispatch('database/getClassicTeas'),
-      notTeas: await store.dispatch('database/getNotTeas'),
-      chineseTeas: await store.dispatch('database/getChineseTeas'),
-      additives: await store.dispatch('database/getAdditives')
+      classicTeas: await store.dispatch('database/categories/tea/сlassic/getAll'),
+      notTeas: await store.dispatch('database/categories/tea/not-teas/getAll'),
+      chineseTeas: await store.dispatch('database/categories/tea/сhinese/getAll'),
+      additives: await store.dispatch('database/categories/tea/additives/getAll')
     }
   }
 })

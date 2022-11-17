@@ -21,12 +21,12 @@ export default Vue.extend({
   name: "drinks",
   async asyncData({ store }) {
     return {
-      lemonades: await store.dispatch('database/getLemonades'),
-      milkshakes: await store.dispatch('database/getMilkshakes'),
-      coldTeas: await store.dispatch('database/getColdTeas'),
-      juices: await store.dispatch('database/getJuices'),
-      energeticDrinks: await store.dispatch('database/getEnergeticDrinks'),
-      beer: await store.dispatch('database/getBeer')
+      lemonades: await store.dispatch('database/categories/beverages/lemonade/getAll'),
+      milkshakes: await store.dispatch('database/categories/beverages/milkshakes/getAll'),
+      coldTeas: await store.dispatch('database/categories/beverages/cold-teas/getAll'),
+      juices: await store.dispatch('database/categories/beverages/juices/getAll'),
+      energeticDrinks: await store.dispatch('database/categories/beverages/energetic-drinks/getAll'),
+      beer: await store.dispatch('database/categories/beverages/beer/getAll')
     }
   }
 })

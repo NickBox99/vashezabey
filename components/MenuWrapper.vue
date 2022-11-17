@@ -36,16 +36,16 @@ export default Vue.extend({
       default: ""
     },
     items: {
-      type: Array as PropType<Database.IMenu[]>,
+      type: Array as PropType<Database.ICategory[]>,
       default: () => ([])
     }
   },
   data() {
-    const subheader: Database.IMenu[] = [], array: Database.IMenu[] = [];
+    const subheader: Database.ICategory[] = [], array: Database.ICategory[] = [];
 
     this.items.forEach(item => {
-      //@ts-ignore
-      if (item.type) {
+
+      if (item.isHeader) {
         subheader.push(item);
       }
       else {

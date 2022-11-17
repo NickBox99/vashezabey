@@ -10,18 +10,6 @@ namespace Database {
       'promo-codes': IPromoCode[] | null,
       'discount-rules': IDiscountRule[] | null,
 
-
-
-
-      coffee: IMenu[] | null,
-      sherbet: IMenu[] | null,
-      iceCream: IMenu[] | null,
-      lemonades: IMenu[] | null,
-      milkshakes: IMenu[] | null,
-      coldTeas: IMenu[] | null,
-      juices: IMenu[] | null,
-      energeticDrinks: IMenu[] | null,
-      beer: IMenu[] | null,
     }
   }
 
@@ -50,14 +38,6 @@ namespace Database {
     region: string,
     registered: number,
     role: IUserRole
-  }
-
-  export interface IMenu {
-    id: number,
-    price: string | null,
-    available: boolean,
-    iconVisible: boolean,
-    isSubheader: boolean
   }
 
   export interface IPlace {
@@ -102,6 +82,17 @@ namespace Database {
     percent: number,
     placeId: string,
     summa: number
+  }
+
+  export interface ICategory {
+    id: string,
+    pos: number,
+    placeId: string,
+    name: string,
+    price: string,
+    isIconVisible: number,
+    isAvailable: number,
+    isHeader: number
   }
 }
 

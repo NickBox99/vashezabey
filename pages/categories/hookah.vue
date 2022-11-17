@@ -43,9 +43,9 @@ export default Vue.extend({
   async asyncData({ store }) {
     return {
       pricesHookahs: await store.dispatch('database/getPricesHookahs'),
-      fruitHookahs: await store.dispatch('database/getFruitHookahs'),
-      corkageFees: await store.dispatch('database/getCorkageFees'),
-      additionallyHookahs: await store.dispatch('database/getAdditionallyHookahs')
+      fruitHookahs: await store.dispatch('database/categories/hookah/fruity/getAll'),
+      corkageFees: await store.dispatch('database/categories/hookah/corkage-fees/getAll'),
+      additionallyHookahs: await store.dispatch('database/categories/hookah/additional/getAll')
     }
   }
 })

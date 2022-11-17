@@ -2,7 +2,7 @@ import { Database } from "@/types";
 //@ts-ignore
 export default (): Database.Store.IState => ({
   rules: null,
-  stocks: null,
+  stocks: null,//@ts-ignore
   coffee: null,
   iceCream: null,
   sherbet: null,

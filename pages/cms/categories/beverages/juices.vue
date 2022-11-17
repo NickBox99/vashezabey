@@ -1,6 +1,6 @@
 <template>
   <cms-content
-    title-page="Лимонады"
+    title-page="Соки и воды"
     title-edit-popup="Форма меню"
     :data="categories"
     :model-edit-popup="formData"
@@ -94,10 +94,10 @@ import { Database } from "@/types";
 import {booleanConvert, replaceTextBr} from "~/helpers";
 
 export default Vue.extend({
-  name: "cms-categories-beverages-milkshakes",
+  name: "cms-categories-beverages-juices",
   layout: 'cms',
   async asyncData({ store }) {
-    await store.dispatch('database/categories/beverages/milkshakes/getAll');
+    await store.dispatch('database/categories/beverages/juices/getAll');
   },
   data() {
     return {
@@ -115,16 +115,16 @@ export default Vue.extend({
     booleanConvert,
     replaceTextBr,
     async addCategory() {
-      return await this.$store.dispatch('database/categories/beverages/milkshakes/add', this.formData);
+      return await this.$store.dispatch('database/categories/beverages/juices/add', this.formData);
     },
     async editCategory() {
-      return await this.$store.dispatch('database/categories/beverages/milkshakes/update', this.formData);
+      return await this.$store.dispatch('database/categories/beverages/juices/update', this.formData);
     },
     async removeCategory(id) {
-      await this.$store.dispatch('database/categories/beverages/milkshakes/remove', id);
+      await this.$store.dispatch('database/categories/beverages/juices/remove', id);
     },
     async moveCategory({ newPos, el }) {
-      await this.$store.dispatch('database/categories/beverages/milkshakes/move', { newPos, el });
+      await this.$store.dispatch('database/categories/beverages/juices/move', { newPos, el });
     },
     updateDataEditPopup(place: Database.ICategory) {
       if (place) {
@@ -146,7 +146,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      categories: 'database/categories/beverages/milkshakes/getAll'
+      categories: 'database/categories/beverages/juices/getAll'
     })
   }
 })

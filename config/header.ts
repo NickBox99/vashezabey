@@ -7,7 +7,7 @@ const headerConfig = {
     title: 'Десерты',
     icon: 'desserts'
   },
-  'categories-drinks': {
+  'categories-beverages': {
     title: 'Напитки',
     icon: 'drinks'
   },

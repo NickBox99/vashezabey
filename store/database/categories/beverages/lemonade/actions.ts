@@ -4,7 +4,7 @@ import {getPosElementDB} from "~/helpers";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.ICategory[]> {
-    return dispatch('cache/getUseCache', { key: 'categories-desserts-lemonade', fetchCallback: () => Vue.prototype.$fb.categories.desserts.lemonade.getAll() }, { root: true })
+    return dispatch('cache/getUseCache', { key: 'categories-beverages-lemonade', fetchCallback: () => Vue.prototype.$fb.categories.beverages.lemonade.getAll() }, { root: true })
   },
 
   async getById({ dispatch }: Database.IStore, id: string): Promise<Database.ICategory | undefined> {
@@ -13,7 +13,7 @@ export default {
   },
 
   async add({ commit }: Database.IStore, category: Database.ICategory) {
-    commit('cache/add', { key: 'categories-desserts-lemonade', value: await Vue.prototype.$fb.categories.desserts.lemonade.add(category) }, { root: true });
+    commit('cache/add', { key: 'categories-beverages-lemonade', value: await Vue.prototype.$fb.categories.beverages.lemonade.add(category) }, { root: true });
   },
 
   async update({ commit, dispatch }: Database.IStore, category: Database.ICategory) {
@@ -24,14 +24,14 @@ export default {
     }
 
     const newCategory = { ...findCat, ...category };
-    commit('cache/update', { key: 'categories-desserts-lemonade', value: newCategory}, { root: true });
-    Vue.prototype.$fb.categories.desserts.lemonade.update(newCategory);
+    commit('cache/update', { key: 'categories-beverages-lemonade', value: newCategory}, { root: true });
+    Vue.prototype.$fb.categories.beverages.lemonade.update(newCategory);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
-    await Vue.prototype.$fb.categories.desserts.lemonade.remove(id);
-    commit('cache/remove', { key: 'categories-desserts-lemonade', id }, { root: true });
+    await Vue.prototype.$fb.categories.beverages.lemonade.remove(id);
+    commit('cache/remove', { key: 'categories-beverages-lemonade', id }, { root: true });
   },
 
   async move({ dispatch }, { el, newPos }) {

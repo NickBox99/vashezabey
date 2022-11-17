@@ -1,18 +1,19 @@
 <template>
   <div
     :class="['menu-item', {
-      'menu-item_star-disable': !iconVisible,
+      'menu-item_star-disable': !isIconVisible,
       'menu-item_dotted-disable': !price,
-      'menu-item_not-available': !available,
+      'menu-item_not-available': !isAvailable,
     }]"
   >
-    <div class="menu-item__name" v-html="textConvert(name)"></div>
-    <div class="menu-item__price" v-if="price" v-html="textConvert(price)"></div>
+    <div class="menu-item__name" v-html="replaceTextBr(name)"></div>
+    <div class="menu-item__price" v-if="price" v-html="replaceTextBr(price)"></div>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
+import {replaceTextBr} from "@/helpers";
 
 export default Vue.extend({
   name: "MenuItem",
@@ -25,19 +26,17 @@ export default Vue.extend({
       type: String | null,
       default: null
     },
-    available: {
+    isAvailable: {
       type: Boolean,
       default: true
     },
-    iconVisible: {
+    isIconVisible: {
       type: Boolean,
       default: true
     }
   },
   methods: {
-    textConvert(text) {
-      return text.replace(/\r?\n/g, '<br/>');
-    }
+    replaceTextBr
   }
 })
 </script>

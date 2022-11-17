@@ -1,6 +1,6 @@
 <template>
   <cms-content
-    title-page="Кофе"
+    title-page="Китайский"
     title-edit-popup="Форма меню"
     :data="categories"
     :model-edit-popup="formData"
@@ -94,10 +94,10 @@ import { Database } from "@/types";
 import {booleanConvert, replaceTextBr} from "~/helpers";
 
 export default Vue.extend({
-  name: "cms-categories-coffee",
+  name: "cms-categories-tea-сhinese",
   layout: 'cms',
   async asyncData({ store }) {
-    await store.dispatch('database/categories/coffee/getAll');
+    await store.dispatch('database/categories/tea/сhinese/getAll');
   },
   data() {
     return {
@@ -115,16 +115,16 @@ export default Vue.extend({
     booleanConvert,
     replaceTextBr,
     async addCategory() {
-      return await this.$store.dispatch('database/categories/coffee/add', this.formData);
+      return await this.$store.dispatch('database/categories/tea/сhinese/add', this.formData);
     },
     async editCategory() {
-      return await this.$store.dispatch('database/categories/coffee/update', this.formData);
+      return await this.$store.dispatch('database/categories/tea/сhinese/update', this.formData);
     },
     async removeCategory(id) {
-      await this.$store.dispatch('database/categories/coffee/remove', id);
+      await this.$store.dispatch('database/categories/tea/сhinese/remove', id);
     },
     async moveCategory({ newPos, el }) {
-      await this.$store.dispatch('database/categories/coffee/move', { newPos, el });
+      await this.$store.dispatch('database/categories/tea/сhinese/move', { newPos, el });
     },
     updateDataEditPopup(place: Database.ICategory) {
       if (place) {
@@ -146,7 +146,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      categories: 'database/categories/coffee/getAll'
+      categories: 'database/categories/tea/сhinese/getAll'
     })
   }
 })

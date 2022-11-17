@@ -17,8 +17,8 @@ export default Vue.extend({
   name: "desserts",
   async asyncData({ store }) {
     return {
-      sherbet: await store.dispatch('database/getSherbets'),
-      iceCream: await store.dispatch('database/getIceCream')
+      sherbet: await store.dispatch('database/categories/desserts/sherbets/getAll'),
+      iceCream: await store.dispatch('database/categories/desserts/ice-cream/getAll')
     }
   }
 })

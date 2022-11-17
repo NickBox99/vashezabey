@@ -1,6 +1,6 @@
 <template>
   <cms-content
-    title-page="Сэндвичи"
+    title-page="Снэки"
     title-edit-popup="Форма меню"
     :data="categories"
     :model-edit-popup="formData"
@@ -94,10 +94,10 @@ import { Database } from "@/types";
 import {booleanConvert, replaceTextBr} from "~/helpers";
 
 export default Vue.extend({
-  name: "cms-categories-snacks-sandwiches",
+  name: "cms-categories-snacks",
   layout: 'cms',
   async asyncData({ store }) {
-    await store.dispatch('database/categories/snacks/sandwiches/getAll');
+    await store.dispatch('database/categories/snacks/getAll');
   },
   data() {
     return {
@@ -115,16 +115,16 @@ export default Vue.extend({
     booleanConvert,
     replaceTextBr,
     async addCategory() {
-      return await this.$store.dispatch('database/categories/snacks/sandwiches/add', this.formData);
+      return await this.$store.dispatch('database/categories/snacks/add', this.formData);
     },
     async editCategory() {
-      return await this.$store.dispatch('database/categories/snacks/sandwiches/update', this.formData);
+      return await this.$store.dispatch('database/categories/snacks/update', this.formData);
     },
     async removeCategory(id) {
-      await this.$store.dispatch('database/categories/snacks/sandwiches/remove', id);
+      await this.$store.dispatch('database/categories/snacks/remove', id);
     },
     async moveCategory({ newPos, el }) {
-      await this.$store.dispatch('database/categories/snacks/sandwiches/move', { newPos, el });
+      await this.$store.dispatch('database/categories/snacks/move', { newPos, el });
     },
     updateDataEditPopup(place: Database.ICategory) {
       if (place) {
@@ -146,7 +146,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      categories: 'database/categories/snacks/sandwiches/getAll'
+      categories: 'database/categories/snacks/getAll'
     })
   }
 })

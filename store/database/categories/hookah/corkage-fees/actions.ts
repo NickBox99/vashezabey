@@ -4,7 +4,7 @@ import {getPosElementDB} from "~/helpers";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.ICategory[]> {
-    return dispatch('cache/getUseCache', { key: 'categories-desserts-sherbets', fetchCallback: () => Vue.prototype.$fb.categories.desserts.sherbets.getAll() }, { root: true })
+    return dispatch('cache/getUseCache', { key: 'categories-hookah-corkage-fees', fetchCallback: () => Vue.prototype.$fb.categories.hookah.corkageFees.getAll() }, { root: true })
   },
 
   async getById({ dispatch }: Database.IStore, id: string): Promise<Database.ICategory | undefined> {
@@ -13,7 +13,7 @@ export default {
   },
 
   async add({ commit }: Database.IStore, category: Database.ICategory) {
-    commit('cache/add', { key: 'categories-desserts-sherbets', value: await Vue.prototype.$fb.categories.desserts.sherbets.add(category) }, { root: true });
+    commit('cache/add', { key: 'categories-hookah-corkage-fees', value: await Vue.prototype.$fb.categories.hookah.corkageFees.add(category) }, { root: true });
   },
 
   async update({ commit, dispatch }: Database.IStore, category: Database.ICategory) {
@@ -24,14 +24,14 @@ export default {
     }
 
     const newCategory = { ...findCat, ...category };
-    commit('cache/update', { key: 'categories-desserts-sherbets', value: newCategory}, { root: true });
-    Vue.prototype.$fb.categories.desserts.sherbets.update(newCategory);
+    commit('cache/update', { key: 'categories-hookah-corkage-fees', value: newCategory}, { root: true });
+    Vue.prototype.$fb.categories.hookah.corkageFees.update(newCategory);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
-    await Vue.prototype.$fb.categories.desserts.sherbets.remove(id);
-    commit('cache/remove', { key: 'categories-desserts-sherbets', id }, { root: true });
+    await Vue.prototype.$fb.categories.hookah.corkageFees.remove(id);
+    commit('cache/remove', { key: 'categories-hookah-corkage-fees', id }, { root: true });
   },
 
   async move({ dispatch }, { el, newPos }) {

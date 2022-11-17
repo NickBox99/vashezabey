@@ -14,7 +14,7 @@ export default {
   name: "coffee",
   async asyncData({ store }) {
     return {
-      items: await store.dispatch('database/getCoffee')
+      items: await store.dispatch('database/categories/coffee/getAll')
     }
   }
 }

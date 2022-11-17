@@ -1,5 +1,5 @@
-function dateConvert(val: number | Date) {
-  return new Intl.DateTimeFormat('ru-RU').format(val);
+function booleanConvert(val: number | boolean) {
+  return val? 'Да' : 'Нет';
 }
 
-export { dateConvert }
+export { booleanConvert }

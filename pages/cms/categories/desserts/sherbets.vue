@@ -1,6 +1,6 @@
 <template>
   <cms-content
-    title-page="Дополнительно"
+    title-page="Щербет"
     title-edit-popup="Форма меню"
     :data="categories"
     :model-edit-popup="formData"
@@ -94,10 +94,10 @@ import { Database } from "@/types";
 import {booleanConvert, replaceTextBr} from "~/helpers";
 
 export default Vue.extend({
-  name: "cms-categories-hookah-additional",
+  name: "cms-categories-desserts-sherbets",
   layout: 'cms',
   async asyncData({ store }) {
-    await store.dispatch('database/categories/hookah/additional/getAll');
+    await store.dispatch('database/categories/desserts/sherbets/getAll');
   },
   data() {
     return {
@@ -115,16 +115,16 @@ export default Vue.extend({
     booleanConvert,
     replaceTextBr,
     async addCategory() {
-      return await this.$store.dispatch('database/categories/hookah/additional/add', this.formData);
+      return await this.$store.dispatch('database/categories/desserts/sherbets/add', this.formData);
     },
     async editCategory() {
-      return await this.$store.dispatch('database/categories/hookah/additional/update', this.formData);
+      return await this.$store.dispatch('database/categories/desserts/sherbets/update', this.formData);
     },
     async removeCategory(id) {
-      await this.$store.dispatch('database/categories/hookah/additional/remove', id);
+      await this.$store.dispatch('database/categories/desserts/sherbets/remove', id);
     },
     async moveCategory({ newPos, el }) {
-      await this.$store.dispatch('database/categories/hookah/additional/move', { newPos, el });
+      await this.$store.dispatch('database/categories/desserts/sherbets/move', { newPos, el });
     },
     updateDataEditPopup(place: Database.ICategory) {
       if (place) {
@@ -146,7 +146,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      categories: 'database/categories/hookah/additional/getAll'
+      categories: 'database/categories/desserts/sherbets/getAll'
     })
   }
 })

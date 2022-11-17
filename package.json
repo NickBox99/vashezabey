@@ -17,7 +17,7 @@
     "cookie-universal-nuxt": "^2.2.2",
     "core-js": "^3.19.3",
     "crypto-js": "^4.1.1",
-    "element-ui": "^2.15.10",
+    "element-ui": "^2.13.0",
     "firebase": "^9.10.0",
     "imask": "^6.4.3",
     "node-fetch": "^2.6.6",
