@@ -1,12 +1,12 @@
 <template>
   <div class="categories">
     <nuxt-link class="categories__item"
-         v-for="cat in categories"
-         :key="cat.id"
-         :to="{ path: `/categories/${cat.type}` }"
+         v-for="category in categories"
+         :key="category.id"
+         :to="{ path: `/categories/${category.type}` }"
     >
-      {{ cat.name }}
-      <div :class="`categories__icon categories__icon_${cat.type}`"></div>
+      {{ category.name }}
+      <div :class="`categories__icon categories__icon_${category.type}`"></div>
     </nuxt-link>
   </div>
 </template>
