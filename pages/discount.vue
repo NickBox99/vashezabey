@@ -23,12 +23,13 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import {calcPersonDiscount, dateConvert} from "@/helpers";
+import { calcPersonDiscount, dateConvert } from "@/helpers";
+import { Database } from "~/types";
 
 export default Vue.extend({
   name: "discount",
-  async asyncData({store}) {
-    const discountRules = await store.dispatch('database/discount-rules/getAll');
+  async asyncData({ store }) {
+    const discountRules: Database.IDiscountRule[] = await store.dispatch('database/discount-rules/getAll');
 
     return { discountRules, ...calcPersonDiscount(discountRules, store.getters["auth/getUser"]) }
   },
@@ -37,17 +38,11 @@ export default Vue.extend({
       nowDiscount: 0,
       nextDiscount: 0,
       leftAccumulate: 0,
-      discountRules: []
+      discountRules: [] as Database.IDiscountRule[]
     }
-  },
-  created() {
-    this.initCalcDiscount();
   },
   methods: {
-    dateConvert,
-    initCalcDiscount() {
-
-    }
+    dateConvert
   },
   computed: {
     ...mapGetters({
