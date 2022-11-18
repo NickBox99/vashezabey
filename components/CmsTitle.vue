@@ -16,7 +16,8 @@ export default Vue.extend({
       default: ""
     },
     count: {
-      type: Number
+      type: Number,
+      default: 0
     }
   }
 })
