@@ -24,7 +24,7 @@ export default Vue.extend({
   },
   computed: {
     settings() {
-      const config = headerConfig[this.$route.name];
+      const config = headerConfig.get(this.$route.name);
 
       return {
         title: config?.title || "ВащеЗабей",
