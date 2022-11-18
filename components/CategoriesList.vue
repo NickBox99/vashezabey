@@ -102,7 +102,7 @@ export default Vue.extend({
     }
 
     &_beverages {
-      background-image: url('~/assets/img/icons/categories/drinks.svg'), var(--background-categories-drinks);
+      background-image: url('~/assets/img/icons/categories/beverages.svg'), var(--background-categories-drinks);
     }
 
     &_desserts {
