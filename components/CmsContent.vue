@@ -56,7 +56,13 @@
 </template>
 
 <script lang="ts">
-import Vue, {PropType} from "vue";
+import Vue, { PropType } from "vue";
+import { ElementUI } from "~/types";
+import { getResultFormValidate } from "~/helpers";
+
+interface IElement {
+  [key: string]: number | string
+}
 
 export default Vue.extend({
   name: "cms-content",
@@ -70,41 +76,43 @@ export default Vue.extend({
       default: ""
     },
     rulesEditPopup: {
-      type: Array,
+      type: Array as PropType<ElementUI.Form.IRule[]>,
       default: () => ([])
     },
     modelEditPopup: {
-      type: Object,
+      type: Object as PropType<{ id?: string }>,
       required: true
     },
     data: {
-      type: Array,
+      type: Array as PropType<IElement[]>,
       required: true
     },
     disableAdd: {
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     disableRemove: {
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     add: {
-      type: Function as PropType<() => void>,
+      type: Function as PropType<() => boolean>,
       required: true
     },
     edit: {
-      type: Function as PropType<() => void>,
+      type: Function as PropType<() => boolean>,
       required: true
     },
     remove: {
-      type: Function as PropType<(id: string) => void>,
+      type: Function as PropType<(id: string) => boolean>,
       required: true
     },
     move: {
-      type: Function as PropType<(obj: { newPos: number, el }) => void>,
+      type: Function as PropType<(obj: { newPos: number, el: IElement }) => boolean>,
       required: true
     },
     searchQuery: {
-      type: Array,
+      type: Array as PropType<string[]>,
       required: true
     }
   },
@@ -112,24 +120,21 @@ export default Vue.extend({
     return {
       isShowEditPopup: false,
       isShowMovePopup: false,
-      moveElement: null,
+      moveElement: null as null | IElement,
       search: ''
     }
   },
   methods: {
-    onOpenEditPopup(obj) {
+    onOpenEditPopup(obj?: {}) {
       this.isShowEditPopup = true;
       this.$emit('edit-popup-open', obj);
     },
-    onOpenMovePopup(el) {
+    onOpenMovePopup(el: IElement) {
       this.moveElement = el;
       this.isShowMovePopup = true;
     },
     async onSubmit() {
-      let isValid = false;
-      //@ts-ignore
-      this.$refs.form.validate((valid: boolean) => isValid = valid);
-      if(!isValid) {
+      if(!getResultFormValidate(this.$refs.form as unknown as ElementUI.Form.IValidate)) {
         return;
       }
 
@@ -140,37 +145,36 @@ export default Vue.extend({
         this.add();
       }
 
-      this.$notify({
-        title: 'Успешно',
-        message: 'Данные отправлены',
-        type: 'success'
-      });
-
+      this.showMessageResult(this.modelEditPopup.id ? this.edit() : this.add());
       this.isShowEditPopup = false;
     },
-    async onRemove(id) {
-      this.remove(id);
-
-      this.$notify({
-        title: 'Успешно',
-        message: 'Данные отправлены',
-        type: 'success'
-      });
+    async onRemove(id: string) {
+      this.showMessageResult(this.remove(id));
     },
-    async onMove(newPos) {
-     this.move({ newPos, el: this.moveElement });
-
-      this.$notify({
-        title: 'Успешно',
-        message: 'Пермещение выполнено',
-        type: 'success'
-      });
+    async onMove(newPos: number) {
+      this.showMessageResult(this.move({ newPos, el: this.moveElement! }));
+    },
+    showMessageResult(isSuccess: boolean) {
+      if (isSuccess) {
+        this.$notify({
+          title: 'Успешно',
+          message: 'Данные отправлены',
+          type: 'success'
+        });
+      }
+      else {
+        this.$notify({
+          title: 'Ошибка',
+          message: 'Системная ошибка',
+          type: 'error'
+        });
+      }
     }
   },
   computed: {
     arrayElements(): any[] {
-      const searchLower = this.search.toLowerCase();//@ts-ignore
-      return this.data.filter(el => this.searchQuery.find(key => String(el[key]).toLowerCase().includes(searchLower)))
+      const searchLower = this.search.toLowerCase();
+      return this.data.filter(el => this.searchQuery.find(key => String(el[key]).toLowerCase().includes(searchLower)));
     }
   }
 })
