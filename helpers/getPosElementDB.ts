@@ -1,10 +1,14 @@
-function getPosElementDB(elements, newPos, el) {
+interface IElement {
+  pos: number
+}
+
+function getPosElementDB(elements: IElement[], newPos: number, el: IElement) {
   const size = elements.length;
   if (!size || newPos < 0 || newPos >= size || elements[newPos].pos === el.pos) {
     return 0;
   }
 
-  let pos;
+  let pos: number;
   const lastIdx = size - 1;
 
   if (lastIdx === newPos) {

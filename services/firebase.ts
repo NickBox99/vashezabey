@@ -1,5 +1,5 @@
 import { getDatabase, set, ref as refDatabase, get, child, push, update as fbUpdate, remove as fbRemove, query } from "firebase/database";
-import { sortByPos } from "~/helpers";
+import { sortArrayByPos } from "~/helpers";
 import { getStorage, ref as refStorage, uploadBytes, getDownloadURL, deleteObject} from 'firebase/storage'
 
 class Firebase {
@@ -325,7 +325,7 @@ class Firebase {
   async getArray<T>(url: string): Promise<T[]> {
     const result = await this.get(url) as T;
 
-    return result? sortByPos(Object.keys(result)
+    return result? sortArrayByPos(Object.keys(result)
       .map(key => ({ ...result[key], id: key })))
       : [];
   }

@@ -22,8 +22,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "cms",
-  middleware: 'auth'
+  name: "cms"
 })
 </script>
 

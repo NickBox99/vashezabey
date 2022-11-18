@@ -43,7 +43,7 @@ import Vue from 'vue';
 import { mapGetters } from 'vuex'
 
 export default Vue.extend({
-  name: 'IndexPage',
+  name: 'index',
   layout: 'main',
   computed: {
     ...mapGetters({

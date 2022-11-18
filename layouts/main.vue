@@ -9,7 +9,6 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "main",
-  middleware: 'auth'
+  name: "main"
 })
 </script>
