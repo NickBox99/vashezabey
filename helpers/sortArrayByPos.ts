@@ -1,5 +1,5 @@
-function sortByPos(arr) {
+function sortArrayByPos(arr) {
   return arr.sort((first, second) => first.pos - second.pos);
 }
 
-export { sortByPos }
+export { sortArrayByPos }
