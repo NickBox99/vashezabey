@@ -138,13 +138,6 @@ export default Vue.extend({
         return;
       }
 
-      if (this.modelEditPopup.id) {
-        this.edit();
-      }
-      else {
-        this.add();
-      }
-
       this.showMessageResult(this.modelEditPopup.id ? this.edit() : this.add());
       this.isShowEditPopup = false;
     },
