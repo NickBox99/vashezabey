@@ -12,6 +12,11 @@ namespace ElementUI {
       validate(callback: ValidateCallback): void
     }
   }
+
+  export interface ISelect {
+    label: string,
+    value: string
+  }
 }
 
 export { ElementUI }

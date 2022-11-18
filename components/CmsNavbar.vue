@@ -11,12 +11,11 @@
     </el-select>
 
 
-    <el-button type="secondary" class="navbar__button" @click="onOpenPopup">Открыть счет</el-button>
+    <el-button type="secondary" class="navbar__button" @click="openPopup">Открыть счет</el-button>
 
     <el-dialog width="500px" top="" title="Открыть счет"
                :visible.sync="isShowPopup"
     >
-
       <el-form ref="form"
         :rules="rules"
         :model="formData"
@@ -42,7 +41,7 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="onSubmitCheck">Открыть счет</el-button>
+        <el-button type="primary" @click="onSubmit">Открыть счет</el-button>
       </div>
     </el-dialog>
   </div>
@@ -50,19 +49,21 @@
 
 <script lang="ts">
 import Vue from "vue"
+import { getResultFormValidate } from "~/helpers";
+import { ElementUI, Database } from "~/types";
 
 export default Vue.extend({
   name: "cms-navbar",
   data() {
     return {
       isShowPopup: false,
-      clients: [],
-      places: [],
-      placeId: null,
+      clients: [] as ElementUI.ISelect[],
+      places: [] as ElementUI.ISelect[],
+      placeId: null as null | string,
 
       formData: {
-        id: null,
-        accumulated: null
+        id: null as null | string,
+        accumulated: null as null | number
       },
 
       rules: {
@@ -77,33 +78,38 @@ export default Vue.extend({
     }
   },
   async created() {
-    this.clients = (await this.$store.dispatch('database/users/getAll')).map(({ id, cardId, name }) => ({ label: `[${cardId}] ${name}`, value: id }));
-    this.places = (await this.$store.dispatch('database/places/getAll')).map(({ id, name }) => ({ label: name, value: id }));
+    this.clients = (await this.$store.dispatch('database/users/getAll')).map(({ id, cardId, name }: Database.IUser) => ({ label: `[${cardId}] ${name}`, value: id }));
+    this.places = (await this.$store.dispatch('database/places/getAll')).map(({ id, name }: Database.IPlace) => ({ label: name, value: id }));
     this.placeId = this.$store.getters["settings/getId"];
   },
   methods: {
-    onOpenPopup() {
+    openPopup() {
       this.isShowPopup = true;
     },
 
-    async onSubmitCheck() {
-      let isValid = false;
-      //@ts-ignore
-      this.$refs.form.validate((valid: boolean) => isValid = valid);
-      if(!isValid) {
+    async onSubmit() {
+      if (!getResultFormValidate(this.$refs.form as unknown as ElementUI.Form.IValidate)) {
         return;
       }
 
-      await this.$store.dispatch('database/users/addAccumulated', this.formData);
+      if (await this.$store.dispatch('database/users/addAccumulated', this.formData)) {
+        this.$notify({
+          title: 'Успешно',
+          message: 'Данные отправлены',
+          type: 'success'
+        });
+      }
+      else {
+        this.$notify({
+          title: 'Ошибка',
+          message: 'Системная ошибка',
+          type: 'error'
+        });
+      }
 
       this.formData = { id: null, accumulated: null };
 
       this.isShowPopup = false;
-      this.$notify({
-        title: 'Успешно',
-        message: 'Данные отправлены',
-        type: 'success'
-      });
     }
   }
 })
