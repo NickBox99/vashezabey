@@ -27,8 +27,8 @@ export default Vue.extend({
       const config = headerConfig.get(this.$route.name);
 
       return {
-        title: config?.title || "ВащеЗабей",
-        icon: config?.icon
+        title: config.title || "ВащеЗабей",
+        icon: config.icon
       }
     }
   }
