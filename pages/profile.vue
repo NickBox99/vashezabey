@@ -56,8 +56,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {mapGetters} from "vuex";
-import { dateConvert } from "@/helpers";
+import { mapGetters } from "vuex";
+import { dateConvert, getResultFormValidate } from "@/helpers";
+import { ElementUI } from "~/types";
 
 export default Vue.extend({
   name: "profile",
@@ -80,14 +81,11 @@ export default Vue.extend({
   methods: {
     dateConvert,
     async onSubmit() {
-      let isValid = false;
-      //@ts-ignore
-      this.$refs.form.validate((valid: boolean) => isValid = valid);
-      if(!isValid) {
+      if (!getResultFormValidate(this.$refs.form as unknown as ElementUI.Form.IValidate)) {
         return;
       }
 
-      const isUpdated = await this.$store.dispatch('database/users/update', { id: this.user.id , name: this.formData.name });
+      const isUpdated: boolean = await this.$store.dispatch('database/users/update', { id: this.user.id , name: this.formData.name });
 
       if (isUpdated) {
         this.$notify({

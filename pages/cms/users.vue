@@ -135,7 +135,7 @@
 import Vue from "vue";
 import { mapGetters } from "vuex";
 import { Database } from "@/types";
-import { numberConvert, dateConvert, calcPersonDiscount } from "@/helpers";
+import {numberConvert, dateConvert, calcPersonDiscount, phoneConvert} from "@/helpers";
 import { UserRoleDescription as userRoles } from "@/config"
 
 export default Vue.extend({
@@ -184,7 +184,7 @@ export default Vue.extend({
     async addUser() {
       const newUser = {
         ...this.formData,
-        phone: this.formData.phone.replace(/[^0-9]/gi ,'')
+        phone: phoneConvert(this.formData.phone)
       }
 
       return await this.$store.dispatch('database/users/add', newUser);

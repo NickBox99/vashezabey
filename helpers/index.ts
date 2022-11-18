@@ -5,7 +5,5 @@ export { getPosElementDB } from './getPosElementDB'
 export { calcPersonDiscount } from './calcPersonDiscount'
 export { textToHtmlText } from './textToHtmlText'
 export { getResultFormValidate } from './getResultFormValidate'
-
-
-
+export { phoneConvert } from './phoneConvert'
 export { booleanToText } from './booleanToText'

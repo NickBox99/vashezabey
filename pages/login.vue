@@ -65,7 +65,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
+import { getResultFormValidate, phoneConvert } from "~/helpers";
+import { ElementUI } from "~/types";
 
 export default Vue.extend({
   name: "login",
@@ -127,10 +129,7 @@ export default Vue.extend({
       await this.$router.push('/discount');
     },
     async sendCode() {
-      let isValid = false;
-      //@ts-ignore
-      this.$refs.form.validate((valid: boolean) => isValid = valid);
-      if(!isValid) {
+      if(!getResultFormValidate(this.$refs.form as unknown as ElementUI.Form.IValidate)) {
         return;
       }
 
@@ -139,7 +138,6 @@ export default Vue.extend({
         return;
       }
 
-      //@ts-ignore
       const response = await this.$smsc.sendCode(this.phoneFormatted);
 
       if (response) {
@@ -163,7 +161,7 @@ export default Vue.extend({
   },
   computed: {
     phoneFormatted(): string {
-      return this.formData.phone.replace(/[^0-9]/gi ,'');
+      return phoneConvert(this.formData.phone);
     },
     settings(): { description: string, buttonText: string, redirect: string[] } {
       return this.isLoginPage ? {
