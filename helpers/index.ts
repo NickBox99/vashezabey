@@ -1,9 +1,11 @@
 export { dateConvert } from './dateConvert'
 export { numberConvert } from './numberConvert'
-export { filterIncludeQuery } from './filterIncludeQuery'
-export { sortByPos } from './sortByPos'
+export { sortArrayByPos } from './sortArrayByPos'
 export { getPosElementDB } from './getPosElementDB'
-export { booleanConvert } from './booleanConvert'
 export { calcPersonDiscount } from './calcPersonDiscount'
-export { replaceTextBr } from './replaceTextBr'
+export { textToHtmlText } from './textToHtmlText'
 export { getResultFormValidate } from './getResultFormValidate'
+
+
+
+export { booleanToText } from './booleanToText'

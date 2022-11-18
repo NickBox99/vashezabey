@@ -1,5 +1,5 @@
-function booleanConvert(val: number | boolean) {
+function booleanToText(val: number | boolean) {
   return val? 'Да' : 'Нет';
 }
 
-export { booleanConvert }
+export { booleanToText }

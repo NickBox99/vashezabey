@@ -6,14 +6,14 @@
       'menu-item_not-available': !isAvailable,
     }]"
   >
-    <div class="menu-item__name" v-html="replaceTextBr(name)"></div>
-    <div class="menu-item__price" v-if="price" v-html="replaceTextBr(price)"></div>
+    <div class="menu-item__name" v-html="textToHtmlText(name)"></div>
+    <div class="menu-item__price" v-if="price" v-html="textToHtmlText(price)"></div>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
-import {replaceTextBr} from "@/helpers";
+import {textToHtmlText} from "@/helpers";
 
 export default Vue.extend({
   name: "menu-item",
@@ -36,7 +36,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    replaceTextBr
+    textToHtmlText
   }
 })
 </script>

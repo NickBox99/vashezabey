@@ -31,7 +31,7 @@ namespace Database {
     birthday: number,
     cardId: string,
     country: string,
-    fixDiscount: string,
+    fixDiscount: number,
     name: string,
     operator: string,
     phone: string,

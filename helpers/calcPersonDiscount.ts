@@ -1,4 +1,6 @@
-function calcPersonDiscount(discountRules, { fixDiscount, accumulated }) {
+import { Database } from "~/types";
+
+function calcPersonDiscount(discountRules: Database.IDiscountRule[], { fixDiscount, accumulated }: Database.IUser) {
   let result = {
     nowDiscount: 0,
     nextDiscount: 0,
@@ -14,7 +16,7 @@ function calcPersonDiscount(discountRules, { fixDiscount, accumulated }) {
     return result;
   }
 
-  const findInterestIndex = discountRules.findIndex((interest: any) => interest.summa > accumulated);
+  const findInterestIndex = discountRules.findIndex(interest => interest.summa > accumulated);
 
   if (findInterestIndex > -1) {
     const { percent, summa } = discountRules[findInterestIndex];

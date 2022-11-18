@@ -14,27 +14,27 @@
     <template slot="table">
       <el-table-column prop="name" label="Название" min-width="180">
         <template slot-scope="scope" v-html="scope.row.name">
-          <div v-html="replaceTextBr(scope.row.name)"></div>
+          <div v-html="textToHtmlText(scope.row.name)"></div>
         </template>
       </el-table-column>
       <el-table-column prop="isAvailable" label="В наличие" min-width="120">
         <template slot-scope="scope">
-          {{ booleanConvert(scope.row.isAvailable) }}
+          {{ booleanToText(scope.row.isAvailable) }}
         </template>
       </el-table-column>
       <el-table-column prop="price" label="Цена" min-width="180">
         <template slot-scope="scope">
-          <div v-html="replaceTextBr(scope.row.price)"></div>
+          <div v-html="textToHtmlText(scope.row.price)"></div>
         </template>
       </el-table-column>
       <el-table-column prop="isHeader" label="Это заголовок" min-width="120">
         <template slot-scope="scope">
-          {{ booleanConvert(scope.row.isHeader) }}
+          {{ booleanToText(scope.row.isHeader) }}
         </template>
       </el-table-column>
       <el-table-column prop="isIconVisible" label="Показать иконку" min-width="120">
         <template slot-scope="scope">
-          {{ booleanConvert(scope.row.isIconVisible) }}
+          {{ booleanToText(scope.row.isIconVisible) }}
         </template>
       </el-table-column>
     </template>
@@ -91,7 +91,7 @@
 import Vue from "vue";
 import { mapGetters } from "vuex";
 import { Database } from "@/types";
-import {booleanConvert, replaceTextBr} from "~/helpers";
+import { booleanToText, textToHtmlText} from "~/helpers";
 
 export default Vue.extend({
   name: "cms-categories-hookah-additional",
@@ -112,8 +112,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    booleanConvert,
-    replaceTextBr,
+    booleanToText,
+    textToHtmlText,
     async addCategory() {
       return await this.$store.dispatch('database/categories/hookah/additional/add', this.formData);
     },
