@@ -1,5 +1,5 @@
 <template>
-  <el-dialog width="410px" top="" title="Изменение позиции" :visible="value === true" @close="close" ref="form">
+  <el-dialog width="410px" top="" title="Изменение позиции" :visible="value" @close="close" ref="form">
 
     <el-form ref="form" :rules="rules" :model="formData">
       <el-form-item label="Введите позицию на которую хотите переместить" prop="position">
@@ -17,6 +17,8 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { getResultFormValidate } from "~/helpers";
+import { ElementUI } from "~/types";
 
 export default Vue.extend({
   name: "cms-table-move-popup",
@@ -29,7 +31,7 @@ export default Vue.extend({
   data() {
     return {
       formData: {
-        position: ''
+        position: null as null | number
       },
       rules: {
         position: [
@@ -40,18 +42,15 @@ export default Vue.extend({
   },
   methods: {
     onSubmit() {
-      let isValid = false;
-      //@ts-ignore
-      this.$refs.form.validate((valid: boolean) => isValid = valid);
-      if(!isValid) {
+      if (!getResultFormValidate(this.$refs.form as unknown as ElementUI.Form.IValidate)) {
         return;
       }
 
-      this.$emit('submit', +this.formData.position - 1);
+      this.$emit('submit', this.formData.position! - 1);
       this.close();
     },
     close() {
-      this.formData.position = '';
+      this.formData.position = null;
       this.$emit('input', false);
     }
   }
