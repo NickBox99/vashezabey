@@ -1,103 +1,49 @@
 <template>
   <el-menu class="sidebar"
            :router="true"
-           :default-active="activeLink"
+           :default-active="$route.name"
   >
     <div class="sidebar__header">ВащеЗабей</div>
 
-    <el-menu-item index="cms" :route="{ name: 'cms' }">
-      <i class="el-icon-menu"></i>
-      Главная
-    </el-menu-item>
-
-<!--    <el-submenu index="1">-->
-<!--      <template slot="title"><i class="el-icon-s-data"></i>Статистика</template>-->
-
-<!--      <el-menu-item index="cms-" :route="{ name: 'cms-' }">Кальян</el-menu-item>-->
-<!--    </el-submenu>-->
-
-    <el-submenu index="2">
+    <component
+      v-for="item in items"
+      :is="item.component"
+      :index="item.route"
+      :route="item.component === 'el-menu-item' ? { name: item.route } : false"
+    >
       <template slot="title">
-        <i class="el-icon-s-unfold"></i>
-        Меню
+        <i v-if="item.icon" :class="`el-icon-${item.icon}`"></i>
+        {{ item.title }}
       </template>
 
-      <el-submenu index="2-1">
-        <template slot="title">
-          <i class="el-icon-setting"></i>
-          Кальян
-        </template>
-        <el-menu-item index="cms-categories-hookah-fruity" :route="{ name: 'cms-categories-hookah-fruity' }">Фруктовый</el-menu-item>
-        <el-menu-item index="cms-categories-hookah-additional" :route="{ name: 'cms-categories-hookah-additional' }">Дополнительно</el-menu-item>
-        <el-menu-item index="cms-categories-hookah-corkage-fees" :route="{ name: 'cms-categories-hookah-corkage-fees' }">Пробковый сбор</el-menu-item>
-      </el-submenu>
+      <template v-if="item.componentChildren">
+        <component
+          v-for="item in item.componentChildren"
+          :is="item.component"
+          :index="item.route"
+          :route="item.component === 'el-menu-item' ? { name: item.route } : false"
+        >
+          <template slot="title">
+            <i v-if="item.icon" :class="`el-icon-${item.icon}`"></i>
+            {{ item.title }}
+          </template>
 
-      <el-submenu index="2-2">
-        <template slot="title">
-          <i class="el-icon-setting"></i>
-          Чай
-        </template>
-        <el-menu-item index="cms-categories-tea-сlassic" :route="{ name: 'cms-categories-tea-сlassic' }">Классический</el-menu-item>
-        <el-menu-item index="cms-categories-tea-сhinese" :route="{ name: 'cms-categories-tea-сhinese' }">Китайский</el-menu-item>
-        <el-menu-item index="cms-categories-tea-additives" :route="{ name: 'cms-categories-tea-additives' }">Добавки</el-menu-item>
-        <el-menu-item index="cms-categories-tea-not-teas" :route="{ name: 'cms-categories-tea-not-teas' }">Не чай</el-menu-item>
-      </el-submenu>
-
-      <el-menu-item index="cms-categories-coffee" :route="{ name: 'cms-categories-coffee' }">Кофе</el-menu-item>
-
-      <el-submenu index="2-3">
-        <template slot="title">
-          <i class="el-icon-setting"></i>
-          Напитки
-        </template>
-        <el-menu-item index="cms-categories-beverages-lemonade" :route="{ name: 'cms-categories-beverages-lemonade' }">Лимонады</el-menu-item>
-        <el-menu-item index="cms-categories-beverages-cold-teas" :route="{ name: 'cms-categories-beverages-cold-teas' }">Холодный чай</el-menu-item>
-        <el-menu-item index="cms-categories-beverages-energetic-drinks" :route="{ name: 'cms-categories-beverages-energetic-drinks' }">Энергетические напитки</el-menu-item>
-        <el-menu-item index="cms-categories-beverages-milkshakes" :route="{ name: 'cms-categories-beverages-milkshakes' }">Милкшейки</el-menu-item>
-        <el-menu-item index="cms-categories-beverages-juices" :route="{ name: 'cms-categories-beverages-juices' }">Соки и воды</el-menu-item>
-        <el-menu-item index="cms-categories-beverages-beer" :route="{ name: 'cms-categories-beverages-beer' }">Безалкогольное пиво</el-menu-item>
-      </el-submenu>
-
-      <el-submenu index="2-4">
-        <template slot="title">
-          <i class="el-icon-setting"></i>
-          Десерты
-        </template>
-        <el-menu-item index="cms-categories-desserts-sherbets" :route="{ name: 'cms-categories-desserts-sherbets' }">Щербет</el-menu-item>
-        <el-menu-item index="cms-categories-desserts-ice-cream" :route="{ name: 'cms-categories-desserts-ice-cream' }">Мороженое</el-menu-item>
-      </el-submenu>
-
-      <el-submenu index="2-5">
-        <template slot="title">
-          <i class="el-icon-setting"></i>
-          Закуски
-        </template>
-        <el-menu-item index="cms-categories-snacks-sandwiches" :route="{ name: 'cms-categories-snacks-sandwiches' }">Сэндвичи</el-menu-item>
-        <el-menu-item index="cms-categories-snacks" :route="{ name: 'cms-categories-snacks' }">Снэки</el-menu-item>
-      </el-submenu>
-    </el-submenu>
-
-    <el-submenu index="3">
-      <template slot="title">
-        <i class="el-icon-user-solid"></i>
-        Администрирование
+          <template v-if="item.componentChildren">
+            <component
+              v-for="item in item.componentChildren"
+              :is="item.component"
+              :index="item.route"
+              :route="item.component === 'el-menu-item' ? { name: item.route } : false"
+            >
+              <template slot="title">
+                <i v-if="item.icon" :class="`el-icon-${item.icon}`"></i>
+                {{ item.title }}
+              </template>
+            </component>
+          </template>
+        </component>
       </template>
-      <el-menu-item index="cms-users" :route="{ name: 'cms-users' }">Пользователи</el-menu-item>
-      <el-menu-item index="cms-stocks" :route="{ name: 'cms-stocks' }">Акции</el-menu-item>
-      <el-menu-item index="cms-rules" :route="{ name: 'cms-rules' }">Правила</el-menu-item>
-      <el-menu-item index="cms-discount-rules" :route="{ name: 'cms-discount-rules' }">Программа лояльности</el-menu-item>
-      <el-menu-item index="cms-promo-codes" :route="{ name: 'cms-promo-codes' }">Промокоды</el-menu-item>
-    </el-submenu>
-
-    <el-submenu index="4">
-      <template slot="title">
-        <i class="el-icon-setting"></i>
-        Настройки
-      </template>
-      <el-menu-item index="cms-settings" :route="{ name: 'cms-settings' }">Общее</el-menu-item>
-      <el-menu-item index="cms-places" :route="{ name: 'cms-places' }">Заведения</el-menu-item>
-    </el-submenu>
-
+    </component>
   </el-menu>
 </template>
 
@@ -108,17 +54,68 @@ export default Vue.extend({
   name: "cms-sidebar",
   data() {
     return {
-      activeLink: null as  string | null | undefined,
+      items: [
+        { route: 'cms', icon: 'menu', title: 'Главная', component: 'el-menu-item' },
+        { route: 'menu', icon: 's-unfold', title: 'Меню', component: 'el-submenu',
+          componentChildren: [
+            { route: 'menu-hookah', icon: 'setting', title: 'Кальян', component: 'el-submenu',
+              componentChildren: [
+                { route: 'cms-categories-hookah-fruity', title: 'Фруктовый', component: 'el-menu-item' },
+                { route: 'cms-categories-hookah-additional', title: 'Дополнительно', component: 'el-menu-item' },
+                { route: 'cms-categories-hookah-corkage-fees', title: 'Пробковый сбор', component: 'el-menu-item' }
+              ]
+            },
+            { route: 'menu-tea', icon: 'setting', title: 'Чай', component: 'el-submenu',
+              componentChildren: [
+                { route: 'cms-categories-tea-сlassic', title: 'Классический', component: 'el-menu-item' },
+                { route: 'cms-categories-tea-сhinese', title: 'Китайский', component: 'el-menu-item' },
+                { route: 'cms-categories-tea-additives', title: 'Добавки', component: 'el-menu-item' },
+                { route: 'cms-categories-tea-not-teas', title: 'Не чай', component: 'el-menu-item' }
+              ]
+            },
+            { route: 'cms-categories-coffee', title: 'Кофе', component: 'el-menu-item' },
+            { route: 'menu-beverages', icon: 'setting', title: 'Напитки', component: 'el-submenu',
+              componentChildren: [
+                { route: 'cms-categories-beverages-lemonade', title: 'Лимонады', component: 'el-menu-item' },
+                { route: 'cms-categories-beverages-cold-teas', title: 'Холодный чай', component: 'el-menu-item' },
+                { route: 'cms-categories-beverages-energetic-drinks', title: 'Энергетические напитки', component: 'el-menu-item' },
+                { route: 'cms-categories-beverages-milkshakes', title: 'Милкшейки', component: 'el-menu-item' },
+                { route: 'cms-categories-beverages-juices', title: 'Соки и воды', component: 'el-menu-item' },
+                { route: 'cms-categories-beverages-beer', title: 'Безалкогольное пиво', component: 'el-menu-item' }
+              ]
+            },
+            { route: 'menu-desserts', icon: 'setting', title: 'Десерты', component: 'el-submenu',
+              componentChildren: [
+                { route: 'cms-categories-desserts-sherbets', title: 'Щербет', component: 'el-menu-item' },
+                { route: 'cms-categories-desserts-ice-cream', title: 'Мороженое', component: 'el-menu-item' }
+              ]
+            },
+            { route: 'menu-snacks', icon: 'setting', title: 'Закуски', component: 'el-submenu',
+              componentChildren: [
+                { route: 'cms-categories-snacks-sandwiches', title: 'Сэндвичи', component: 'el-menu-item' },
+                { route: 'cms-categories-snacks', title: 'Снэки', component: 'el-menu-item' }
+              ]
+            }
+          ]
+        },
+        { route: 'admin-panel', icon: 'user-solid', title: 'Администрирование', component: 'el-submenu',
+          componentChildren: [
+            { route: 'cms-users', title: 'Пользователи', component: 'el-menu-item' },
+            { route: 'cms-stocks', title: 'Акции', component: 'el-menu-item' },
+            { route: 'cms-rules', title: 'Правила', component: 'el-menu-item' },
+            { route: 'cms-discount-rules', title: 'Программа лояльности', component: 'el-menu-item' },
+            { route: 'cms-promo-codes', title: 'Промокоды', component: 'el-menu-item' }
+          ]
+        },
+        { route: 'settings', icon: 'setting', title: 'Настройки', component: 'el-submenu',
+          componentChildren: [
+            { route: 'cms-settings', title: 'Общее', component: 'el-menu-item' },
+            { route: 'cms-places', title: 'Заведения', component: 'el-menu-item' }
+          ]
+        }
+      ]
     }
-  },
-  mounted: function(){
-    this.activeLink = this.$route.name;
-  },
-  watch: {
-    $route (to) {
-      this.activeLink = to.name;
-    }
-  },
+  }
 })
 </script>
 
