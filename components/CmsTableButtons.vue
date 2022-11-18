@@ -22,7 +22,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "CmsTableButtons",
+  name: "cms-table-buttons",
   props: {
     disableRemove: {
       type: Boolean

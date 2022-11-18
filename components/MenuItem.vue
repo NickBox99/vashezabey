@@ -16,7 +16,7 @@ import Vue from "vue";
 import {replaceTextBr} from "@/helpers";
 
 export default Vue.extend({
-  name: "MenuItem",
+  name: "menu-item",
   props: {
     name: {
       type: String,

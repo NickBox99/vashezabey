@@ -105,7 +105,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "CmsSidebar",
+  name: "cms-sidebar",
   data() {
     return {
       activeLink: null as  string | null | undefined,

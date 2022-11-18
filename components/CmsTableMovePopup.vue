@@ -19,7 +19,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "CmsTableMovePopup",
+  name: "cms-table-move-popup",
   props: {
     value: {
       type: Boolean,

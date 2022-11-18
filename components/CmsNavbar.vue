@@ -52,7 +52,7 @@
 import Vue from "vue"
 
 export default Vue.extend({
-  name: "CmsNavbar",
+  name: "cms-navbar",
   data() {
     return {
       isShowPopup: false,

@@ -59,7 +59,7 @@
 import Vue, {PropType} from "vue";
 
 export default Vue.extend({
-  name: "CmsContent",
+  name: "cms-content",
   props: {
     titlePage: {
       type: String,

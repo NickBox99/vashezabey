@@ -16,7 +16,7 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 
 export default Vue.extend({
-  name: "CategoriesList",
+  name: "categories-list",
   data() {
     return {
       categories: [

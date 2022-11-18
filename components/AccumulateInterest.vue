@@ -21,7 +21,7 @@ import { numberConvert } from "@/helpers"
 import { Settings } from "@/types"
 
 export default Vue.extend({
-  name: "AccumulateInterest",
+  name: "accumulate-interest",
   props: {
     accumulateInterests: {
       type: Array as PropType<Settings.IInterest[]>,

@@ -13,7 +13,7 @@ import Vue from "vue";
 import { headerConfig } from "@/config"
 
 export default Vue.extend({
-  name: "Header",
+  name: "the-header",
   head(){
     return {
       title: this.settings.title

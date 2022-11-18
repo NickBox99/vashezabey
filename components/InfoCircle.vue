@@ -12,7 +12,7 @@
 import Vue, { PropType } from "vue";
 
 export default Vue.extend({
-  name: "InfoCircle",
+  name: "info-circle",
   props: {
     type: {
       type: String as PropType<"small" | "large">,

@@ -31,7 +31,7 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 
 export default Vue.extend({
-  name: "TheWelcome",
+  name: "the-welcome",
   data() {
     return {
       isShowPopup: false

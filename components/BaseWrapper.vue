@@ -12,7 +12,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "BaseWrapper",
+  name: "base-wrapper",
   props: {
     stretch: {
       type: Boolean,
