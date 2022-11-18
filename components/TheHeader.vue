@@ -3,7 +3,10 @@
     <div class="header__wrapper">
       <nuxt-link to="/" class="header__back">Назад</nuxt-link>
       <h1 class="header__title">{{ this.settings.title }}</h1>
-      <img v-if="this.settings.icon" :src="require(`../assets/img/icons/categories/${this.settings.icon}.svg`)" class="header__icon" width="22" height="22" :alt="this.settings.title">
+      <img class="header__icon" width="22" height="22"
+           v-if="this.settings.icon"
+           :src="require(`../assets/img/icons/categories/${this.settings.icon}.svg`)"
+           :alt="this.settings.title">
     </div>
   </div>
 </template>
