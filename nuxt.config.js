@@ -50,6 +50,10 @@ export default {
 
   },
 
+  router: {
+    middleware: 'auth'
+  },
+
   env: {
     smscLogin: process.env.SMSC_LOGIN,
     smscPassword: process.env.SMSC_PASSWORD,
