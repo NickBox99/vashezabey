@@ -37,7 +37,7 @@ export default Vue.extend({
   data() {
     return {
       isShowPopup: false,
-      promoCode: null
+      promoCode: null as null | string
     }
   },
   methods: {
