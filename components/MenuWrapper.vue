@@ -29,7 +29,7 @@ import Vue, { PropType } from "vue";
 import { Database } from "~/types";
 
 export default Vue.extend({
-  name: "MenuWrapper",
+  name: "menu-wrapper",
   props: {
     title: {
       type: String,

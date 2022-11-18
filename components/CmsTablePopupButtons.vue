@@ -8,7 +8,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "CmsTablePopupButtons",
+  name: "cms-table-popup-buttons",
   methods: {
     onSave() {
       this.$emit('save');

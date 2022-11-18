@@ -21,21 +21,25 @@
 <script lang="ts">
 import Vue from "vue";
 
+interface IElement {
+  [key: string]: number | string
+}
+
 export default Vue.extend({
-  name: "CmsTableButtons",
+  name: "cms-table-buttons",
   props: {
     disableRemove: {
       type: Boolean
     }
   },
   methods: {
-    move(el) {
-      this.$emit('move', el);
+    move(obj: IElement) {
+      this.$emit('move', obj);
     },
-    edit(obj) {
+    edit(obj: IElement) {
       this.$emit('edit', obj);
     },
-    remove(id) {
+    remove(id: IElement) {
       this.$emit('remove', id);
     }
   }

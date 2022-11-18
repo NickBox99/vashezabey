@@ -33,11 +33,11 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 
 export default Vue.extend({
-  name: "DiscountBonus",
+  name: "discount-bonus",
   data() {
     return {
       isShowPopup: false,
-      promoCode: null
+      promoCode: null as null | string
     }
   },
   methods: {

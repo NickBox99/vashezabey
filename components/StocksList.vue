@@ -13,7 +13,7 @@ import { Database } from '@/types';
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "StockList",
+  name: "stock-list",
   props: {
     maxSize: {
       type: Number,

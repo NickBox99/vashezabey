@@ -3,7 +3,10 @@
     <div class="header__wrapper">
       <nuxt-link to="/" class="header__back">Назад</nuxt-link>
       <h1 class="header__title">{{ this.settings.title }}</h1>
-      <img v-if="this.settings.icon" :src="require(`../assets/img/icons/categories/${this.settings.icon}.svg`)" class="header__icon" width="22" height="22" :alt="this.settings.title">
+      <img class="header__icon" width="22" height="22"
+           v-if="this.settings.icon"
+           :src="require(`../assets/img/icons/categories/${this.settings.icon}.svg`)"
+           :alt="this.settings.title">
     </div>
   </div>
 </template>
@@ -13,7 +16,7 @@ import Vue from "vue";
 import { headerConfig } from "@/config"
 
 export default Vue.extend({
-  name: "Header",
+  name: "the-header",
   head(){
     return {
       title: this.settings.title
@@ -21,11 +24,11 @@ export default Vue.extend({
   },
   computed: {
     settings() {
-      const config = headerConfig[this.$route.name];
+      const config = headerConfig.get(this.$route.name);
 
       return {
-        title: config?.title || "ВащеЗабей",
-        icon: config?.icon
+        title: config.title || "ВащеЗабей",
+        icon: config.icon
       }
     }
   }

@@ -1,20 +1,16 @@
 <template>
   <div class="footer">
-    <nuxt-link to="/" exact active-class="footer__item_active" class="footer__item">
-      <img src="~/assets/img/icons/menu.svg" width="24" height="24" alt="Меню" class="footer__icon">
-      <div class="footer__title">Меню</div>
-    </nuxt-link>
-    <nuxt-link to="/stocks" active-class="footer__item_active" class="footer__item">
-      <img src="~/assets/img/icons/stocks.svg" width="24" height="24" alt="Акции" class="footer__icon">
-      <div class="footer__title">Акции</div>
-    </nuxt-link>
-    <nuxt-link to="/discount" active-class="footer__item_active" class="footer__item">
-      <img src="~/assets/img/icons/card.svg" width="24" height="24" alt="Дис. карта" class="footer__icon">
-      <div class="footer__title">Дис. карта</div>
-    </nuxt-link>
-    <nuxt-link to="/profile" active-class="footer__item_active" class="footer__item">
-      <img src="~/assets/img/icons/profile.svg" width="24" height="24" alt="Профиль" class="footer__icon">
-      <div class="footer__title">Профиль</div>
+    <nuxt-link active-class="footer__item_active" class="footer__item"
+               exact
+               v-for="link in links"
+               :key="link.title"
+               :to="link.to"
+    >
+      <img width="24" height="24" class="footer__icon"
+           :src="require(`~/assets/img/icons/${link.icon}.svg`)"
+           :alt="link.title"
+      >
+      <div class="footer__title">{{ link.title }}</div>
     </nuxt-link>
   </div>
 </template>
@@ -23,7 +19,17 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "Footer"
+  name: "the-footer",
+  data() {
+    return {
+      links: [
+        { to: '/', icon: 'menu', title: 'Меню' },
+        { to: '/stocks', icon: 'stocks', title: 'Акции' },
+        { to: '/discount', icon: 'card', title: 'Дис. карта' },
+        { to: '/profile', icon: 'profile', title: 'Профиль' }
+      ]
+    }
+  }
 })
 </script>
 

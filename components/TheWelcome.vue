@@ -1,5 +1,6 @@
 <template>
   <div class="welcome">
+    {{test}}
     <a :href="`https://www.instagram.com/${settings.instagram}`" class="welcome__social" target="_blank">
       <img class="welcome__instagram" src="~/assets/img/icons/instagram.svg" width="50" height="50" alt="Наш инстаграм">
     </a>
@@ -31,18 +32,27 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 
 export default Vue.extend({
-  name: "TheWelcome",
+  name: "the-welcome",
   data() {
+    const { table, place } = this.$route.query;
+
     return {
-      isShowPopup: false
+      isShowPopup: false,
+      table,
+      place
     }
   },
   methods: {
     waiterCall() {
+      if (!this.table) {
+        return;
+      }
+
       this.$messenger.telegram.waiterCall({
-        table: this.$route.query.table? String(this.$route.query.table) : "Стол не обнаружен",
+        table: this.table,
         cardId: this.user?.cardId
       });
+
       this.isShowPopup = true;
     },
 

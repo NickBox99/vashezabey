@@ -9,14 +9,15 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "CmsTitle",
+  name: "cms-title",
   props: {
     title: {
       type: String,
       default: ""
     },
     count: {
-      type: Number
+      type: Number,
+      default: 0
     }
   }
 })

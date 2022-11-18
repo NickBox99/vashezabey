@@ -1,12 +1,12 @@
 <template>
   <div class="categories">
     <nuxt-link class="categories__item"
-         v-for="cat in categories"
-         :key="cat.id"
-         :to="{ path: `/categories/${cat.type}` }"
+         v-for="category in categories"
+         :key="category.id"
+         :to="{ path: `/categories/${category.type}` }"
     >
-      {{ cat.name }}
-      <div :class="`categories__icon categories__icon_${cat.type}`"></div>
+      {{ category.name }}
+      <div :class="`categories__icon categories__icon_${category.type}`"></div>
     </nuxt-link>
   </div>
 </template>
@@ -16,7 +16,7 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 
 export default Vue.extend({
-  name: "CategoriesList",
+  name: "categories-list",
   data() {
     return {
       categories: [
@@ -102,7 +102,7 @@ export default Vue.extend({
     }
 
     &_beverages {
-      background-image: url('~/assets/img/icons/categories/drinks.svg'), var(--background-categories-drinks);
+      background-image: url('~/assets/img/icons/categories/beverages.svg'), var(--background-categories-drinks);
     }
 
     &_desserts {
