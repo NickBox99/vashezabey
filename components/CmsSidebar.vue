@@ -8,6 +8,7 @@
     <component
       v-for="item in items"
       :is="item.component"
+      :key="item.route"
       :index="item.route"
       :route="item.component === 'el-menu-item' ? { name: item.route } : false"
     >
@@ -20,6 +21,7 @@
         <component
           v-for="item in item.componentChildren"
           :is="item.component"
+          :key="item.route"
           :index="item.route"
           :route="item.component === 'el-menu-item' ? { name: item.route } : false"
         >
@@ -32,6 +34,7 @@
             <component
               v-for="item in item.componentChildren"
               :is="item.component"
+              :key="item.route"
               :index="item.route"
               :route="item.component === 'el-menu-item' ? { name: item.route } : false"
             >
