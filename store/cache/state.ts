@@ -5,25 +5,6 @@ export default (): Database.Store.IState => ({
   places: null,
   rules: null,
   stocks: null,
-  'promo-codes': null,
-  'discount-rules': null,
-
-
-
-
-
-
-
-
-
-//@ts-ignore
-  coffee: null,
-  iceCream: null,
-  sherbet: null,
-  lemonades: null,
-  milkshakes: null,
-  coldTeas: null,
-  juices: null,
-  energeticDrinks: null,
-  beer: null,
+  promoCodes: null,
+  discountRules: null,
 })

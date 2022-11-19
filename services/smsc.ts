@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { Smsc } from "@/types"
+
 class Smsc {
   #apiSend = '';
   #apiInfo = '';
@@ -46,7 +48,7 @@ class Smsc {
     return response?? false;
   }
 
-  async getInfoPhone(phone: string): Promise<false | { country: string, operator: string, region: string }> {
+  async getInfoPhone(phone: string): Promise<false | Smsc.IPhoneInfo> {
     const response = await axios.get(`${this.#apiInfo}&phone=${phone}`).then(e => e.data).catch(() => false);
 
     return !response.error? response : false;

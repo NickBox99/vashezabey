@@ -1,15 +1,35 @@
 import { ActionContext } from "vuex";
+import Vue from "vue";
 
 namespace Database {
   export namespace Store {
     export interface IState {
       users: IUser[] | null,
-      places: IPlace[] | null,
-      rules: IRule[] | null,
       stocks: IStock[] | null,
-      'promo-codes': IPromoCode[] | null,
-      'discount-rules': IDiscountRule[] | null,
+      rules: IRule[] | null,
+      places: IPlace[] | null,
+      promoCodes: IPromoCode[] | null,
+      discountRules: IDiscountRule[] | null,
 
+      //categories
+      beveragesBeer: ICategory[] | null,
+      beveragesColdTeas: ICategory[] | null,
+      beveragesEnergeticDrinks: ICategory[] | null,
+      beveragesJuices: ICategory[] | null,
+      beveragesLemonade: ICategory[] | null,
+      beveragesMilkshakes: ICategory[] | null,
+      coffee: ICategory[] | null,
+      dessertsIceCream: ICategory[] | null,
+      dessertsSherbets: ICategory[] | null,
+      hookahAdditional: ICategory[] | null,
+      hookahCorkageFees: ICategory[] | null,
+      hookahFruity: ICategory[] | null,
+      snacks: ICategory[] | null,
+      snacksSandwiches: ICategory[] | null,
+      teaAdditives: ICategory[] | null,
+      teaNotTeas: ICategory[] | null,
+      teaChinese: ICategory[] | null,
+      teaClassic: ICategory[] | null
     }
   }
 
@@ -32,7 +52,7 @@ namespace Database {
     cardId: string,
     country: string,
     fixDiscount: number,
-    name: string,
+    name: string,//await Vue.prototype.///123213
     operator: string,
     phone: string,
     region: string,

@@ -13,18 +13,24 @@ export default {
   },
 
   async add({ commit }: Database.IStore, place: Database.IPlace) {
-    const newPlace = {
+    const result: Database.IPlace = await Vue.prototype.$fb.places.add({
       ...place,
       phone: '',
       reviewLink: '',
       instagram: ''
-    };
+    });
 
-    commit('cache/add', { key: 'places', value: await Vue.prototype.$fb.places.add(newPlace) }, { root: true });
+    if (result) {
+      commit('cache/add', { key: 'places', value: result }, { root: true });
+      return true;
+    }
+    else {
+      return false;
+    }
   },
 
   async update({ commit, dispatch }: Database.IStore, place: Database.IPlace) {
-    const findPlace = await dispatch('getById', place.id);
+    const findPlace: Database.IPlace = await dispatch('getById', place.id);
 
     if (!findPlace) {
       return false;
@@ -32,13 +38,14 @@ export default {
 
     const newPlace = { ...findPlace, ...place };
     commit('cache/update', { key: 'places', value: newPlace}, { root: true });
-    Vue.prototype.$fb.places.update(newPlace);
+    await Vue.prototype.$fb.places.update(newPlace);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
     await Vue.prototype.$fb.places.remove(id);
     commit('cache/remove', { key: 'places', id }, { root: true });
+    return true;
   },
 
   async move({ dispatch }, { el, newPos }) {
@@ -48,6 +55,6 @@ export default {
       return false;
     }
 
-    return dispatch('update', { id: el.id, pos })
+    return dispatch('update', { id: el.id, pos });
   }
 }

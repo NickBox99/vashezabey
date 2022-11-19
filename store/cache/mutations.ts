@@ -16,13 +16,10 @@ export default {
   },
 
   update<T extends Database.Store.IState, K extends keyof T, V extends T[K][][number]>(state: { [K in keyof T]: V[] }, { key, value }: { key: K, value: V }) {
-    //@ts-ignore
     state[key] = sortArrayByPos(state[key].map(el => el.id === value.id? {...el, ...value} : el));
   },
 
-  //@ts-ignore
   remove(state, { key, id }) {
-    //@ts-ignore
     state[key] = state[key].filter(el => el.id !== id);
   }
 }

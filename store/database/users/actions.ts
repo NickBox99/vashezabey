@@ -1,6 +1,6 @@
-import { Database } from "~/types";
 import Vue from "vue";
-import {getPosElementDB} from "~/helpers";
+import { Database, Smsc } from "~/types";
+import { getPosElementDB } from "~/helpers";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.IUser[]> {
@@ -22,7 +22,7 @@ export default {
   },
 
   async addAccumulated({ commit, dispatch }: Database.IStore, { id, accumulated }: Database.IUser) {
-    const findUser = await dispatch('getById', id);
+    const findUser: Database.IUser | null = await dispatch('getById', id);
 
     if (!findUser) {
       return false;
@@ -45,8 +45,7 @@ export default {
       role: Database.IUserRole.user
     }, user);
 
-    //@ts-ignore
-    const smsc = await Vue.prototype.$smsc.getInfoPhone(user.phone);
+    const smsc: Smsc.IPhoneInfo | null = await Vue.prototype.$smsc.getInfoPhone(user.phone);
 
     if (smsc) {
       const { country, operator, region } = smsc;
@@ -55,25 +54,35 @@ export default {
       newUser.country = country;
     }
 
-    commit('cache/add', { key: 'users', value: await Vue.prototype.$fb.users.add(newUser) }, { root: true });
+    const result = await Vue.prototype.$fb.users.add(newUser);
+
+    if (result) {
+      commit('cache/add', { key: 'users', value: result }, { root: true });
+      return true;
+    }
+    else {
+      return false;
+    }
   },
 
   async update({ commit, dispatch }: Database.IStore, user: Database.IUser) {
-    const findUser = await dispatch('getById', user.id);
+    const findUser: Database.IUser | null = await dispatch('getById', user.id);
 
     if (!findUser) {
       return false;
     }
 
     const newUser = { ...findUser, ...user };
+
     commit('cache/update', { key: 'users', value: newUser}, { root: true });
-    Vue.prototype.$fb.users.update(newUser);
+    await Vue.prototype.$fb.users.update(newUser);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
     await Vue.prototype.$fb.users.remove(id);
     commit('cache/remove', { key: 'users', id }, { root: true });
+    return true;
   },
 
   async move({ dispatch }, { el, newPos }) {
@@ -83,6 +92,6 @@ export default {
       return false;
     }
 
-    return dispatch('update', { id: el.id, pos })
+    return dispatch('update', { id: el.id, pos });
   }
 }
