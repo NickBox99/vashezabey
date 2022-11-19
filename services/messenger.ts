@@ -3,7 +3,7 @@ class Messenger {
 
   telegram = {
     waiterCall: async ({ table, cardId } : { table: string, cardId: number | null }) => {
-      const message = `[Бот]: Стол: ${table}. Пользователь: ${cardId ?? "Не авторизирован"}`;
+      const message = `[Бот]: Стол: ${table ?? "Не распознан"}. Пользователь: ${cardId ?? "Не авторизирован"}`;
       await fetch(`${this.api}${message}`);
     }
   };

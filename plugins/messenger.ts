@@ -2,8 +2,10 @@ import Vue from 'vue'
 import { Messenger } from '@/services'
 import { telegramApi } from '@/environment'
 
-Vue.use({
-  install(Vue) {
-    Vue.prototype.$messenger = new Messenger(telegramApi);
+declare module 'vue/types/vue' {
+  interface Vue {
+    $messenger: Messenger
   }
-})
+}
+
+Vue.prototype.$messenger = new Messenger(telegramApi);

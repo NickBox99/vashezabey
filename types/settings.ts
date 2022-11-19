@@ -1,6 +1,6 @@
 import { ActionContext } from "vuex";
 
-namespace Settings {
+export namespace Settings {
   export namespace Store {
 
     export interface IState {
@@ -24,5 +24,3 @@ namespace Settings {
     summa: number
   }
 }
-
-export { Settings }

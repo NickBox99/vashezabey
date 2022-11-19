@@ -1,5 +1,7 @@
 import Vue from "vue";
-import {Auth, Database } from "~/types";
+import { Auth, Database } from "~/types";
+import { NuxtCookies } from "cookie-universal-nuxt";
+
 
 export default {
   async login({ dispatch, commit }: Auth.IStore, phone: string) {
@@ -7,7 +9,9 @@ export default {
     if (user) {
       commit('setUser', user);
 
-      this.$cookies.set('uid', Vue.prototype.$crypto.encrypt(phone), {
+      (this as unknown as {
+        $cookies: NuxtCookies
+      }).$cookies.set('uid', Vue.prototype.$crypto.encrypt(phone), {
         path: '/',
         maxAge: 2500000
       });
@@ -19,7 +23,9 @@ export default {
   },
 
   async initAuth({ dispatch }: Auth.IStore): Promise<boolean> {
-    const uid = this.$cookies.get('uid');
+    const uid = (this as unknown as {
+      $cookies: NuxtCookies
+    }).$cookies.get('uid');
 
     if (uid) {
       return await dispatch('login', Vue.prototype.$crypto.decrypt(uid));

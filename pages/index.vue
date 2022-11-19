@@ -44,7 +44,7 @@ import { mapGetters } from 'vuex'
 
 export default Vue.extend({
   name: 'index',
-  layout: 'main',
+  layout: 'home',
   computed: {
     ...mapGetters({
       isAuth: 'auth/isAuth',

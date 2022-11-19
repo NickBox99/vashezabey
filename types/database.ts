@@ -1,7 +1,6 @@
 import { ActionContext } from "vuex";
-import Vue from "vue";
 
-namespace Database {
+export namespace Database {
   export namespace Store {
     export interface IState {
       users: IUser[] | null,
@@ -115,5 +114,3 @@ namespace Database {
     isHeader: number
   }
 }
-
-export { Database }

@@ -1,6 +1,6 @@
 import { ValidateCallback } from "element-ui/types/form";
 
-namespace ElementUI {
+export namespace ElementUI {
   export namespace Form {
 
     export interface IRules {
@@ -28,5 +28,3 @@ namespace ElementUI {
     value: string
   }
 }
-
-export { ElementUI }

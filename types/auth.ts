@@ -1,7 +1,7 @@
 import { ActionContext } from "vuex";
-import { Database } from "~/types/database";
+import { Database } from "~/types";
 
-namespace Auth {
+export namespace Auth {
   export namespace Store {
     export interface IState {
       user: Database.IUser | null
@@ -10,5 +10,3 @@ namespace Auth {
 
   export type IStore = ActionContext<Store.IState, Store.IState>;
 }
-
-export { Auth }

@@ -8,7 +8,7 @@
       <div class="motto__content">Самые дымные кальяны тут</div>
       <div class="motto__content">Самые дымные кальяны тут</div>
     </div>
-    <img class="welcome__img" src="~/assets/img/welcome-bg.jpg" width="634" height="516" alt="Ваще Забей">
+    <img class="welcome__img" src="~/assets/img/welcome-bg.webp" width="634" height="516" alt="Ваще Забей">
 
     <div class="container">
       <h1 class="welcome__title">Добро пожаловать в <span class="welcome__company">Ваще Забей</span>!</h1>
@@ -43,7 +43,7 @@ export default Vue.extend({
   },
   methods: {
     waiterCall() {
-      if (!this.table) {
+      if (!this.table && !this.user) {
         return;
       }
 
