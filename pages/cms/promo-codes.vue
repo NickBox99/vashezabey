@@ -52,8 +52,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import { Database } from "@/types";
-import {dateConvert} from "~/helpers";
+import { Database, ElementUI } from "@/types";
+import { dateConvert } from "~/helpers";
 
 export default Vue.extend({
   name: "cms-promo-codes",
@@ -68,7 +68,7 @@ export default Vue.extend({
         code: '',
         discount: null as null | number,
         validity: null as null | number
-      },
+      } as Database.IPromoCode,
       rules: {
         code: [
           { required: true, message: 'Выберите код', trigger: 'blur' }
@@ -79,35 +79,34 @@ export default Vue.extend({
         validity: [
           { required: true, message: 'Выберите срок действия', trigger: 'blur' }
         ]
-      }
+      } as ElementUI.Form.IRules
     }
   },
   methods: {
     dateConvert,
-    async addPromoCode() {
-      return await this.$store.dispatch('database/promo-codes/add', this.formData);
+    async addPromoCode(): Promise<boolean> {
+      return this.$store.dispatch('database/promo-codes/add', this.formData);
     },
-    async editPromoCode() {
-      return await this.$store.dispatch('database/promo-codes/update', this.formData);
+    async editPromoCode(): Promise<boolean> {
+      return this.$store.dispatch('database/promo-codes/update', this.formData);
     },
-    async removePromoCode(id) {
-      await this.$store.dispatch('database/promo-codes/remove', id);
+    async removePromoCode(id): Promise<boolean> {
+      return this.$store.dispatch('database/promo-codes/remove', id);
     },
-    async movePromoCode({ newPos, el }) {
-      await this.$store.dispatch('database/promo-codes/move', { newPos, el });
+    async movePromoCode({ newPos, el }): Promise<boolean> {
+      return this.$store.dispatch('database/promo-codes/move', { newPos, el });
     },
     updateDataEditPopup(promoCode: Database.IPromoCode) {
       if (promoCode) {
-        const { id, code, discount, validity } = promoCode;
-
-        this.formData = { id, code, discount, validity }
+        this.formData = promoCode;
       }
       else {
         this.formData = {
           id: '',
           code: '',
-          discount: null,
-          validity: null
+          pos: 0,
+          discount: null!,
+          validity: null!
         }
       }
     }

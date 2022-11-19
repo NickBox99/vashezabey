@@ -60,9 +60,7 @@ import Vue, { PropType } from "vue";
 import { ElementUI } from "~/types";
 import { getResultFormValidate } from "~/helpers";
 
-interface IElement {
-  [key: string]: number | string
-}
+interface IElement { id: string }
 
 export default Vue.extend({
   name: "cms-content",
@@ -76,11 +74,11 @@ export default Vue.extend({
       default: ""
     },
     rulesEditPopup: {
-      type: Array as PropType<ElementUI.Form.IRule[]>,
-      default: () => ([])
+      type: Object as PropType<ElementUI.Form.IRules>,
+      default: () => ({})
     },
     modelEditPopup: {
-      type: Object as PropType<{ id?: string }>,
+      type: Object as PropType<IElement>,
       required: true
     },
     data: {
@@ -96,19 +94,19 @@ export default Vue.extend({
       default: false
     },
     add: {
-      type: Function as PropType<() => boolean>,
+      type: Function as PropType<() => Promise<boolean>>,
       required: true
     },
     edit: {
-      type: Function as PropType<() => boolean>,
+      type: Function as PropType<() => Promise<boolean>>,
       required: true
     },
     remove: {
-      type: Function as PropType<(id: string) => boolean>,
+      type: Function as PropType<(id: string) => Promise<boolean>>,
       required: true
     },
     move: {
-      type: Function as PropType<(obj: { newPos: number, el: IElement }) => boolean>,
+      type: Function as PropType<(obj: { newPos: number, el: IElement }) => Promise<boolean>>,
       required: true
     },
     searchQuery: {
@@ -138,14 +136,14 @@ export default Vue.extend({
         return;
       }
 
-      this.showMessageResult(this.modelEditPopup.id ? this.edit() : this.add());
+      this.showMessageResult( this.modelEditPopup.id ? await this.edit() : await this.add());
       this.isShowEditPopup = false;
     },
     async onRemove(id: string) {
-      this.showMessageResult(this.remove(id));
+      this.showMessageResult(await this.remove(id));
     },
     async onMove(newPos: number) {
-      this.showMessageResult(this.move({ newPos, el: this.moveElement! }));
+      this.showMessageResult(await this.move({ newPos, el: this.moveElement! }));
     },
     showMessageResult(isSuccess: boolean) {
       if (isSuccess) {
@@ -165,7 +163,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    arrayElements(): any[] {
+    arrayElements(): IElement[] {
       const searchLower = this.search.toLowerCase();
       return this.data.filter(el => this.searchQuery.find(key => String(el[key]).toLowerCase().includes(searchLower)));
     }

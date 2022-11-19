@@ -2,6 +2,11 @@ import { ValidateCallback } from "element-ui/types/form";
 
 namespace ElementUI {
   export namespace Form {
+
+    export interface IRules {
+      [key: string]: IRule[]
+    }
+
     export interface IRule {
       required?: boolean,
       message?: string,
@@ -11,6 +16,11 @@ namespace ElementUI {
     export interface IValidate {
       validate(callback: ValidateCallback): void
     }
+  }
+
+  export interface IUpload {
+    clearFiles(): void,
+    uploadFiles: File[]
   }
 
   export interface ISelect {
