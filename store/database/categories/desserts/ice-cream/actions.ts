@@ -1,10 +1,10 @@
-import { Database } from "~/types";
 import Vue from "vue";
-import {getPosElementDB} from "~/helpers";
+import { Database } from "~/types";
+import { getPosElementDB } from "~/helpers";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.ICategory[]> {
-    return dispatch('cache/getUseCache', { key: 'categories-desserts-ice-cream', fetchCallback: () => Vue.prototype.$fb.categories.desserts.iceCream.getAll() }, { root: true })
+    return dispatch('cache/getUseCache', { key: 'dessertsIceCream', fetchCallback: () => Vue.prototype.$fb.categories.desserts.iceCream.getAll() }, { root: true })
   },
 
   async getById({ dispatch }: Database.IStore, id: string): Promise<Database.ICategory | undefined> {
@@ -13,25 +13,34 @@ export default {
   },
 
   async add({ commit }: Database.IStore, category: Database.ICategory) {
-    commit('cache/add', { key: 'categories-desserts-ice-cream', value: await Vue.prototype.$fb.categories.desserts.iceCream.add(category) }, { root: true });
+    const result: Database.ICategory | null = await Vue.prototype.$fb.categories.desserts.iceCream.add(category);
+
+    if (result) {
+      commit('cache/add', { key: 'dessertsIceCream', value: result }, { root: true });
+      return true;
+    }
+    else {
+      return false;
+    }
   },
 
   async update({ commit, dispatch }: Database.IStore, category: Database.ICategory) {
-    const findCat = await dispatch('getById', category.id);
+    const findCat: Database.ICategory = await dispatch('getById', category.id);
 
     if (!findCat) {
       return false;
     }
 
     const newCategory = { ...findCat, ...category };
-    commit('cache/update', { key: 'categories-desserts-ice-cream', value: newCategory}, { root: true });
-    Vue.prototype.$fb.categories.desserts.iceCream.update(newCategory);
+    commit('cache/update', { key: 'dessertsIceCream', value: newCategory}, { root: true });
+    await Vue.prototype.$fb.categories.desserts.iceCream.update(newCategory);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
     await Vue.prototype.$fb.categories.desserts.iceCream.remove(id);
-    commit('cache/remove', { key: 'categories-desserts-ice-cream', id }, { root: true });
+    commit('cache/remove', { key: 'dessertsIceCream', id }, { root: true });
+    return true;
   },
 
   async move({ dispatch }, { el, newPos }) {
@@ -41,6 +50,6 @@ export default {
       return false;
     }
 
-    return dispatch('update', { id: el.id, pos })
+    return dispatch('update', { id: el.id, pos });
   }
 }

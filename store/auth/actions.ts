@@ -1,12 +1,12 @@
 import Vue from "vue";
-import { Auth } from "~/types";
+import {Auth, Database } from "~/types";
 
 export default {
   async login({ dispatch, commit }: Auth.IStore, phone: string) {
-    const user = await dispatch('database/users/getByPhone', phone, { root: true });
+    const user: Database.IUser = await dispatch('database/users/getByPhone', phone, { root: true });
     if (user) {
       commit('setUser', user);
-      //@ts-ignore
+
       this.$cookies.set('uid', Vue.prototype.$crypto.encrypt(phone), {
         path: '/',
         maxAge: 2500000
@@ -18,7 +18,7 @@ export default {
     return false;
   },
 
-  async initAuth({ dispatch }: Auth.IStore): Promise<boolean> {//@ts-ignore
+  async initAuth({ dispatch }: Auth.IStore): Promise<boolean> {
     const uid = this.$cookies.get('uid');
 
     if (uid) {
@@ -27,4 +27,6 @@ export default {
 
     return false;
   },
+
+  logout() {}
 }

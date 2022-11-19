@@ -1,10 +1,10 @@
-import { Database } from "~/types";
 import Vue from "vue";
-import {getPosElementDB} from "~/helpers";
+import { Database } from "~/types";
+import { getPosElementDB } from "~/helpers";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.IDiscountRule[]> {
-    return dispatch('cache/getUseCache', { key: 'discount-rules', fetchCallback: () => Vue.prototype.$fb.discountRules.getAll() }, { root: true })
+    return dispatch('cache/getUseCache', { key: 'discountRules', fetchCallback: () => Vue.prototype.$fb.discountRules.getAll() }, { root: true })
   },
 
   async getById({ dispatch }: Database.IStore, id: string): Promise<Database.IDiscountRule | undefined> {
@@ -13,25 +13,34 @@ export default {
   },
 
   async add({ commit }: Database.IStore, discountRule: Database.IDiscountRule) {
-    commit('cache/add', { key: 'discount-rules', value: await Vue.prototype.$fb.discountRules.add(discountRule) }, { root: true });
+    const result: Database.IDiscountRule = await Vue.prototype.$fb.discountRules.add(discountRule);
+
+    if (result) {
+      commit('cache/add', { key: 'discountRules', value: result }, { root: true });
+      return true;
+    }
+    else {
+      return false;
+    }
   },
 
   async update({ commit, dispatch }: Database.IStore, discountRule: Database.IDiscountRule) {
-    const findDiscountRule = await dispatch('getById', discountRule.id);
+    const findDiscountRule: Database.IDiscountRule = await dispatch('getById', discountRule.id);
 
     if (!findDiscountRule) {
       return false;
     }
 
     const newDiscountRule = { ...findDiscountRule, ...discountRule };
-    commit('cache/update', { key: 'discount-rules', value: newDiscountRule}, { root: true });
-    Vue.prototype.$fb.discountRules.update(newDiscountRule);
+    commit('cache/update', { key: 'discountRules', value: newDiscountRule}, { root: true });
+    await Vue.prototype.$fb.discountRules.update(newDiscountRule);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
     await Vue.prototype.$fb.discountRules.remove(id);
-    commit('cache/remove', { key: 'discount-rules', id }, { root: true });
+    commit('cache/remove', { key: 'discountRules', id }, { root: true });
+    return true;
   },
 
   async move({ dispatch }, { el, newPos }) {
@@ -41,6 +50,6 @@ export default {
       return false;
     }
 
-    return dispatch('update', { id: el.id, pos })
+    return dispatch('update', { id: el.id, pos });
   }
 }

@@ -1,5 +1,4 @@
 import { ActionContext } from "vuex";
-import { Database } from "~/types/database";
 
 namespace Settings {
   export namespace Store {
@@ -11,7 +10,13 @@ namespace Settings {
 
   export type IStore = ActionContext<Store.IState, Store.IState>;
 
-  export interface ISettings extends Database.IPlace {}
+  export interface ISettings {
+    id: string,
+    name: string,
+    instagram: string,
+    reviewLink: string,
+    phone: string
+  }
 
   export interface IInterest {
     id: number,

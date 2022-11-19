@@ -1,6 +1,6 @@
-import { Database } from "~/types";
 import Vue from "vue";
-import {getPosElementDB} from "~/helpers";
+import { Database } from "~/types";
+import { getPosElementDB } from "~/helpers";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.IStock[]> {
@@ -13,19 +13,27 @@ export default {
   },
 
   async add({ commit }: Database.IStore, stock: Database.IStock) {
-    commit('cache/add', { key: 'stocks', value: await Vue.prototype.$fb.stocks.add(stock) }, { root: true });
+    const result: Database.IStock = await Vue.prototype.$fb.stocks.add(stock);
+
+    if (result) {
+      commit('cache/add', { key: 'stocks', value: result }, { root: true });
+      return true;
+    }
+    else {
+      return false;
+    }
   },
 
   async update({ commit, dispatch }: Database.IStore, stock: Database.IStock) {
-    const findStock = await dispatch('getById', stock.id);
+    const findStock: Database.IStock | null = await dispatch('getById', stock.id);
 
     if (!findStock) {
       return false;
     }
 
     const newStock = { ...findStock, ...stock };
-    commit('cache/update', { key: 'stocks', value: newStock}, { root: true });
-    Vue.prototype.$fb.stocks.update(newStock);
+    commit('cache/update', { key: 'stocks', value: newStock }, { root: true });
+    await Vue.prototype.$fb.stocks.update(newStock);
     return true;
   },
 
@@ -38,6 +46,7 @@ export default {
 
     await Vue.prototype.$fb.stocks.remove(id, findStock.imageId);
     commit('cache/remove', { key: 'stocks', id }, { root: true });
+    return true;
   },
 
   async move({ dispatch }, { el, newPos }) {
@@ -47,6 +56,6 @@ export default {
       return false;
     }
 
-    return dispatch('update', { id: el.id, pos })
+    return dispatch('update', { id: el.id, pos });
   }
 }

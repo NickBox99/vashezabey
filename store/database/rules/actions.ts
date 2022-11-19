@@ -1,6 +1,6 @@
+import Vue from "vue";
 import { Database } from "~/types";
 import { getPosElementDB } from "@/helpers"
-import Vue from "vue";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.IRule[]> {
@@ -13,11 +13,19 @@ export default {
   },
 
   async add({ commit }: Database.IStore, rule: Database.IRule) {
-    commit('cache/add', { key: 'rules', value: await Vue.prototype.$fb.rules.add(rule) }, { root: true });
+    const result: Database.IRule = await Vue.prototype.$fb.rules.add(rule);
+
+    if (result) {
+      commit('cache/add', { key: 'rules', value: result }, { root: true });
+      return true;
+    }
+    else {
+      return false;
+    }
   },
 
   async update({ commit, dispatch }: Database.IStore, rule: Database.IRule) {
-    const findRule = await dispatch('getById', rule.id);
+    const findRule: Database.IRule = await dispatch('getById', rule.id);
 
     if (!findRule) {
       return false;
@@ -25,13 +33,14 @@ export default {
 
     const newRule = { ...findRule, ...rule };
     commit('cache/update', { key: 'rules', value: newRule }, { root: true });
-    Vue.prototype.$fb.rules.update(newRule);
+    await Vue.prototype.$fb.rules.update(newRule);
     return true;
   },
 
   async remove({ commit }: Database.IStore, id: string) {
     await Vue.prototype.$fb.rules.remove(id);
     commit('cache/remove', { key: 'rules', id }, { root: true });
+    return true;
   },
 
   async move({ dispatch }, { el, newPos }) {
@@ -41,6 +50,6 @@ export default {
       return false;
     }
 
-    return dispatch('update', { id: el.id, pos })
+    return dispatch('update', { id: el.id, pos });
   }
 }
