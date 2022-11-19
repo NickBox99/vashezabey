@@ -52,7 +52,7 @@ namespace Database {
     cardId: string,
     country: string,
     fixDiscount: number,
-    name: string,//await Vue.prototype.///123213
+    name: string,
     operator: string,
     phone: string,
     region: string,
