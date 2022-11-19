@@ -1,6 +1,5 @@
 <template>
   <div class="welcome">
-    {{test}}
     <a :href="`https://www.instagram.com/${settings.instagram}`" class="welcome__social" target="_blank">
       <img class="welcome__instagram" src="~/assets/img/icons/instagram.svg" width="50" height="50" alt="Наш инстаграм">
     </a>
