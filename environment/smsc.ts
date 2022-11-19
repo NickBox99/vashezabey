@@ -1,4 +1,6 @@
-const smscLogin = process.env.smscLogin as string;
-const smscPassword = process.env.smscPassword as string;
+const smsc = process.env.smsc as unknown as {
+  login: string,
+  password: string
+}
 
-export { smscLogin, smscPassword }
+export { smsc }
