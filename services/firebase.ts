@@ -9,6 +9,21 @@ class Firebase {
   database = getDatabase();
   storage = getStorage();
 
+  history = {
+    navigations: {
+      add: (history: Database.History.INavigation) => this.add<Database.History.INavigation>('history_navigations', history),
+      getAll: () => this.getArray<Database.History.INavigation>('history_navigations')
+    },
+    payment: {
+      add: (history: Database.History.IPayment) => this.add<Database.History.IPayment>('history_payment', history),
+      getAll: () => this.getArray<Database.History.IPayment>('history_payment')
+    },
+    users: {
+      add: (history: Database.History.IUser) => this.add<Database.History.IUser>('history_users', history),
+      getAll: () => this.getArray<Database.History.IUser>('history_users')
+    }
+  }
+
   categories = {
     beverages: {
       beer: {

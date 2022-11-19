@@ -24,5 +24,8 @@ export default (): Database.Store.IState => ({
   teaAdditives: null,
   teaNotTeas: null,
   teaChinese: null,
-  teaClassic: null
+  teaClassic: null,
+  historyNavigations: null,
+  historyPayment: null,
+  historyUsers: null
 })

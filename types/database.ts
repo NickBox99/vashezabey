@@ -28,7 +28,12 @@ export namespace Database {
       teaAdditives: ICategory[] | null,
       teaNotTeas: ICategory[] | null,
       teaChinese: ICategory[] | null,
-      teaClassic: ICategory[] | null
+      teaClassic: ICategory[] | null,
+
+      //history
+      historyNavigations: History.INavigation[] | null,
+      historyPayment: History.IPayment[] | null,
+      historyUsers: History.IUser[] | null
     }
   }
 
@@ -112,5 +117,36 @@ export namespace Database {
     isIconVisible: number,
     isAvailable: number,
     isHeader: number
+  }
+
+  export namespace History {
+    interface IDefault {
+      id: string,
+      date: number,
+      time: number,
+      userId: string,
+      placeId: string
+    }
+
+    export enum INavigationType {
+
+    }
+
+    export interface INavigation extends IDefault {
+      type: INavigationType
+    }
+
+    export interface IPayment extends IDefault {
+      summa: number
+    }
+
+    export enum IUserType {
+      'login',
+      'registration'
+    }
+
+    export interface IUser extends IDefault {
+      type: IUserType
+    }
   }
 }

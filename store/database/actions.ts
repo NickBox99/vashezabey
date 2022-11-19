@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { Database } from "@/types";
 
 export default {
