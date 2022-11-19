@@ -15,11 +15,11 @@ export default {
     }
   },
 
-  update<T extends Database.Store.IState, K extends keyof T, V extends T[K][][number]>(state: { [K in keyof T]: V[] }, { key, value }: { key: K, value: V }) {
+  update<T extends Database.Store.IState, K extends keyof T, V extends T[K][][number] & { id: string }>(state: { [K in keyof T]: V[] }, { key, value }: { key: K, value: V }) {
     state[key] = sortArrayByPos(state[key].map(el => el.id === value.id? {...el, ...value} : el));
   },
 
-  remove(state, { key, id }) {
+  remove<T extends Database.Store.IState, K extends keyof T, V extends T[K][][number] & { id: string }>(state: { [K in keyof T]: V[] }, { key, id }: { key: K, id: string }) {
     state[key] = state[key].filter(el => el.id !== id);
   }
 }
