@@ -1,4 +1,4 @@
-export { smscLogin, smscPassword } from './smsc'
+export { smsc } from './smsc'
 export { cryptoKey } from './cryptoJS'
 export { telegramApi } from './telegram'
-export { firebaseKey } from './firebase'
+export { firebase } from './firebase'

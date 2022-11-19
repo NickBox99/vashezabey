@@ -1,13 +1,15 @@
 import axios from "axios";
 
 class Smsc {
-  #apiSend = 'https://smsc.ru/sys/send.php?fmt=3&';
-  #apiInfo = 'https://smsc.ru/sys/info.php?fmt=3&get_operator=1&charset=utf-8&';
+  #apiSend = '';
+  #apiInfo = '';
 
   constructor(public login: string, public password: string) {
+    const baseUrl = 'https://smsc.ru/sys/'
     const access = `login=${login}&psw=${password}`;
-    this.#apiSend += access;
-    this.#apiInfo += access;
+
+    this.#apiSend = `${baseUrl}send.php?fmt=3&${access}`;
+    this.#apiInfo = `${baseUrl}info.php?fmt=3&get_operator=1&charset=utf-8&${access}`;
   }
 
   private getNewCode() {
@@ -44,8 +46,7 @@ class Smsc {
     return response?? false;
   }
 
-  async getInfoPhone(phone: string) {
-    //@ts-ignore
+  async getInfoPhone(phone: string): Promise<false | { country: string, operator: string, region: string }> {
     const response = await axios.get(`${this.#apiInfo}&phone=${phone}`).then(e => e.data).catch(() => false);
 
     return !response.error? response : false;

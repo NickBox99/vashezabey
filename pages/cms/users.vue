@@ -134,8 +134,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import { Database } from "@/types";
-import {numberConvert, dateConvert, calcPersonDiscount, phoneConvert} from "@/helpers";
+import { Database, ElementUI } from "@/types";
+import { numberConvert, dateConvert, calcPersonDiscount, phoneConvert } from "@/helpers";
 import { UserRoleDescription as userRoles } from "@/config"
 
 export default Vue.extend({
@@ -143,23 +143,30 @@ export default Vue.extend({
   layout: 'cms',
   async asyncData({ store }) {
     await store.dispatch('database/users/getAll');
-    const discountRules = await store.dispatch('database/discount-rules/getAll');
+    const discountRules: Database.IDiscountRule[] = await store.dispatch('database/discount-rules/getAll');
 
     return { discountRules }
   },
   data() {
     return {
-      discountRules: [],
+      discountRules: [] as Database.IDiscountRule[],
 
       formData: {
         id: '',
         name: '',
         phone: '',
-        birthday: 0,
+        birthday: null!,
         role: Database.IUserRole.user,
         cardId: '',
-        fixDiscount: ''
-      },
+        pos: null!,
+        accumulateUpdated: null!,
+        accumulated: null!,
+        fixDiscount: null!,
+        country: null!,
+        operator: null!,
+        region: null!,
+        registered: null!
+      } as Database.IUser,
       rules: {
         name: [
           { required: true, message: 'Выберите имя', trigger: 'blur' }
@@ -172,7 +179,7 @@ export default Vue.extend({
         birthday: [
           { required: true, message: 'Введите дату рождения', trigger: 'blur' }
         ]
-      },
+      } as ElementUI.Form.IRules,
 
       userRoles
     }
@@ -181,7 +188,7 @@ export default Vue.extend({
     calcPersonDiscount,
     numberConvert,
     dateConvert,
-    async addUser() {
+    async addUser(): Promise<boolean> {
       const newUser = {
         ...this.formData,
         phone: phoneConvert(this.formData.phone)
@@ -189,38 +196,35 @@ export default Vue.extend({
 
       return await this.$store.dispatch('database/users/add', newUser);
     },
-    async editUser() {
+    async editUser(): Promise<boolean> {
       return await this.$store.dispatch('database/users/update', this.formData);
     },
-    async removeUser(id) {
-      await this.$store.dispatch('database/users/remove', id);
+    async removeUser(id): Promise<boolean> {
+      return this.$store.dispatch('database/users/remove', id);
     },
-    async moveUser({ newPos, el }) {
-      await this.$store.dispatch('database/users/move', { newPos, el });
+    async moveUser({ newPos, el }): Promise<boolean> {
+      return this.$store.dispatch('database/users/move', { newPos, el });
     },
     updateDataEditPopup(user: Database.IUser) {
       if (user) {
-        const { id, name, phone, birthday, role, cardId, fixDiscount } = user;
-
-        this.formData = {
-          id,
-          name,
-          phone,
-          birthday,
-          role,
-          cardId,
-          fixDiscount
-        }
+        this.formData = user;
       }
       else {
         this.formData = {
           id: '',
           name: '',
           phone: '',
-          birthday: 0,
+          birthday: null!,
           role: Database.IUserRole.user,
           cardId: '',
-          fixDiscount: ''
+          pos: null!,
+          accumulateUpdated: null!,
+          accumulated: null!,
+          fixDiscount: null!,
+          country: null!,
+          operator: null!,
+          region: null!,
+          registered: null!
         }
       }
     }

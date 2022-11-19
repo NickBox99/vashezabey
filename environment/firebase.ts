@@ -1,3 +1,11 @@
-const firebaseKey = process.env.firebaseKey as string;
+const firebase = process.env.firebase as unknown as {
+  apiKey: string,
+  authDomain: string,
+  databaseURL: string,
+  projectId: string,
+  storageBucket: string,
+  messagingSenderId: string,
+  appId: string
+};
 
-export { firebaseKey }
+export { firebase }

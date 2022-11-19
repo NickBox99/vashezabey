@@ -35,6 +35,8 @@
 <script lang="ts">
 import Vue from "vue";
 import {mapGetters} from "vuex";
+import {Database, ElementUI} from "~/types";
+import {getResultFormValidate} from "~/helpers";
 
 export default Vue.extend({
   name: "cms-settings",
@@ -46,7 +48,7 @@ export default Vue.extend({
         phone,
         reviewLink,
         instagram
-      }
+      } as Database.IPlace
     }
   },
   data() {
@@ -55,7 +57,7 @@ export default Vue.extend({
         phone: '',
         reviewLink: '',
         instagram: ''
-      },
+      } as Database.IPlace,
 
       rules: {
         phone: [
@@ -67,19 +69,18 @@ export default Vue.extend({
         instagram: [
           { required: true, message: 'Выберите инстаграм', trigger: 'blur' }
         ]
-      }
+      } as ElementUI.Form.IRules
     }
   },
   methods: {
     async onSubmit() {
-      let isValid = false;
-      //@ts-ignore
-      this.$refs.form.validate((valid: boolean) => isValid = valid);
-      if(!isValid) {
+      if (!getResultFormValidate(this.$refs.form as unknown as ElementUI.Form.IValidate)) {
         return;
       }
 
-      const isUpdated = await this.$store.dispatch('settings/update', { id: this.placeId, ...this.formData });
+      if(!this.placeId) return;
+
+      const isUpdated: boolean = await this.$store.dispatch('settings/update', { ...this.formData, id: this.placeId });
 
       if (isUpdated) {
         this.$notify({

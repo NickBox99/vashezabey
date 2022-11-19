@@ -86,8 +86,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import { Database } from "@/types";
-import {dateConvert} from "~/helpers";
+import { Database, ElementUI } from "@/types";
+import { dateConvert } from "~/helpers";
 
 export default Vue.extend({
   name: "cms-stocks",
@@ -104,10 +104,10 @@ export default Vue.extend({
         imageId: '',
         imageUrl: '',
         validity: null as null | number
-      },
+      } as Database.IStock,
       previewFile: null as null | File | string,
       previewUrl: '',
-      fileListPreview: [],
+      fileListPreview: [] as { name: string, url: string }[],
       isShowPreviewPopup: false,
 
       rules: {
@@ -120,18 +120,19 @@ export default Vue.extend({
         validity: [
           { required: true, message: 'Выберите срок действия', trigger: 'blur' }
         ]
-      }
+      } as ElementUI.Form.IRules
     }
   },
   methods: {
     dateConvert,
 
-    uploadPreview({file}) {
+    uploadPreview({ file } : { file: File }) {
       this.previewFile = file;
 
-      //@ts-ignore
-      if (this.$refs.uploadPreview.uploadFiles.length > 1) { //@ts-ignore
-        this.$refs.uploadPreview.uploadFiles.shift();
+      const uploadPreview = (this.$refs.uploadPreview as unknown as ElementUI.IUpload);
+
+      if (uploadPreview.uploadFiles.length > 1) {
+        uploadPreview.uploadFiles.shift();
       }
     },
     openPreviewPopup(file) {
@@ -139,40 +140,41 @@ export default Vue.extend({
       this.isShowPreviewPopup = true
     },
 
+    async addStock(): Promise<boolean> {
+      return this.$store.dispatch('database/stocks/add', {...this.formData, imageUrl: this.previewFile });
+    },
+    async editStock(): Promise<boolean> {
+      return this.$store.dispatch('database/stocks/update', {...this.formData, imageUrl: this.previewFile });
+    },
+    async removeStock(id): Promise<boolean> {
+      return this.$store.dispatch('database/stocks/remove', id);
+    },
+    async moveStock({ newPos, el }): Promise<boolean> {
+      return this.$store.dispatch('database/stocks/move', { newPos, el });
+    },
 
-    async addStock() {
-      return await this.$store.dispatch('database/stocks/add', {...this.formData, imageUrl: this.previewFile });
-    },
-    async editStock() {
-      return await this.$store.dispatch('database/stocks/update', {...this.formData, imageUrl: this.previewFile });
-    },
-    async removeStock(id) {
-      await this.$store.dispatch('database/stocks/remove', id);
-    },
-    async moveStock({ newPos, el }) {
-      await this.$store.dispatch('database/stocks/move', { newPos, el });
-    },
     updateDataEditPopup(stock: Database.IStock) {
       if (stock) {
-        const { id, name, description, imageId, imageUrl, validity } = stock;
+        const { imageId, imageUrl } = stock;
+        this.formData = stock;
 
-        this.formData = { id, name, description, imageId, imageUrl, validity }
-        this.previewFile = imageUrl;//@ts-ignore
+        this.previewFile = imageUrl;
         this.fileListPreview = [{ name: imageId, url: imageUrl }];
       }
       else {
         this.formData = {
           id: '',
+          pos: 0,
           name: '',
           description: '',
           imageId: '',
           imageUrl: '',
-          validity: null
+          validity: null!
         }
+
         this.previewFile = null;
-        //@ts-ignore
-        if (this.$refs.uploadPreview) { //@ts-ignore
-          this.$refs.uploadPreview.clearFiles();
+        if (this.$refs.uploadPreview) {
+          (this.$refs.uploadPreview as unknown as ElementUI.IUpload).clearFiles();
         }
       }
     }

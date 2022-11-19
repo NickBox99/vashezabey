@@ -58,7 +58,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import { Database } from "@/types";
+import { Database, ElementUI } from "@/types";
 
 export default Vue.extend({
   name: "cms-places",
@@ -74,38 +74,30 @@ export default Vue.extend({
         address: '',
         country: '',
         city: ''
-      },
+      } as Database.IPlace,
       rules: {
         name: [
           { required: true, message: 'Выберите имя', trigger: 'blur' }
         ]
-      }
+      } as ElementUI.Form.IRules
     }
   },
   methods: {
-    async addPlace() {
-      return await this.$store.dispatch('database/places/add', this.formData);
+    async addPlace(): Promise<boolean> {
+      return this.$store.dispatch('database/places/add', this.formData);
     },
-    async editPlace() {
-      return await this.$store.dispatch('database/places/update', this.formData);
+    async editPlace(): Promise<boolean> {
+      return this.$store.dispatch('database/places/update', this.formData);
     },
-    async removePlace(id) {
-      await this.$store.dispatch('database/places/remove', id);
+    async removePlace(id): Promise<boolean> {
+      return this.$store.dispatch('database/places/remove', id);
     },
-    async movePlace({ newPos, el }) {
-      await this.$store.dispatch('database/places/move', { newPos, el });
+    async movePlace({ newPos, el }): Promise<boolean> {
+      return this.$store.dispatch('database/places/move', { newPos, el });
     },
     updateDataEditPopup(place: Database.IPlace) {
       if (place) {
-        const { id, name, address, city, country } = place;
-
-        this.formData = {
-          id,
-          name,
-          address,
-          country,
-          city
-        }
+        this.formData = place;
       }
       else {
         this.formData = {
@@ -113,7 +105,11 @@ export default Vue.extend({
           name: '',
           address: '',
           country: '',
-          city: ''
+          city: '',
+          pos: 0,
+          phone: '',
+          reviewLink: '',
+          instagram: ''
         }
       }
     }

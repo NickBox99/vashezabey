@@ -29,7 +29,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import { Database } from "@/types";
+import { Database, ElementUI } from "@/types";
 
 export default Vue.extend({
   name: "cms-rules",
@@ -42,39 +42,35 @@ export default Vue.extend({
       formData: {
         id: '',
         name: ''
-      },
+      } as Database.IRule,
       rules: {
         name: [
           { required: true, message: 'Выберите правило', trigger: 'blur' }
         ]
-      }
+      } as ElementUI.Form.IRules
     }
   },
   methods: {
-    async addRule() {
-      return await this.$store.dispatch('database/rules/add', this.formData);
+    async addRule(): Promise<boolean> {
+      return this.$store.dispatch('database/rules/add', this.formData);
     },
-    async editRule() {
-      return await this.$store.dispatch('database/rules/update', this.formData);
+    async editRule(): Promise<boolean> {
+      return this.$store.dispatch('database/rules/update', this.formData);
     },
-    async removeRule(id) {
-      await this.$store.dispatch('database/rules/remove', id);
+    async removeRule(id): Promise<boolean> {
+      return this.$store.dispatch('database/rules/remove', id);
     },
-    async moveRule({ newPos, el }) {
-      await this.$store.dispatch('database/rules/move', { newPos, el });
+    async moveRule({ newPos, el }): Promise<boolean> {
+      return this.$store.dispatch('database/rules/move', { newPos, el });
     },
     updateDataEditPopup(rule: Database.IRule) {
       if (rule) {
-        const { id, name } = rule;
-
-        this.formData = {
-          id,
-          name
-        }
+        this.formData = rule
       }
       else {
         this.formData = {
           id: '',
+          pos: 0,
           name: ''
         }
       }

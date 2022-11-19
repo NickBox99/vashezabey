@@ -108,29 +108,27 @@ export default Vue.extend({
         price: '',
         isIconVisible: 1,
         isHeader: 0
-      }
+      } as Database.ICategory
     }
   },
   methods: {
     booleanToText,
     textToHtmlText,
-    async addCategory() {
-      return await this.$store.dispatch('database/categories/desserts/ice-cream/add', this.formData);
+    async addCategory(): Promise<boolean> {
+      return this.$store.dispatch('database/categories/desserts/ice-cream/add', this.formData);
     },
-    async editCategory() {
-      return await this.$store.dispatch('database/categories/desserts/ice-cream/update', this.formData);
+    async editCategory(): Promise<boolean> {
+      return this.$store.dispatch('database/categories/desserts/ice-cream/update', this.formData);
     },
-    async removeCategory(id) {
-      await this.$store.dispatch('database/categories/desserts/ice-cream/remove', id);
+    async removeCategory(id): Promise<boolean> {
+      return this.$store.dispatch('database/categories/desserts/ice-cream/remove', id);
     },
-    async moveCategory({ newPos, el }) {
-      await this.$store.dispatch('database/categories/desserts/ice-cream/move', { newPos, el });
+    async moveCategory({ newPos, el }): Promise<boolean> {
+      return this.$store.dispatch('database/categories/desserts/ice-cream/move', { newPos, el });
     },
-    updateDataEditPopup(place: Database.ICategory) {
-      if (place) {
-        const { id, name, isAvailable, price, isIconVisible, isHeader } = place;
-
-        this.formData = { id, name, isAvailable, price, isIconVisible, isHeader }
+    updateDataEditPopup(category: Database.ICategory) {
+      if (category) {
+        this.formData = category
       }
       else {
         this.formData = {
@@ -139,7 +137,9 @@ export default Vue.extend({
           isAvailable: 1,
           price: '',
           isIconVisible: 1,
-          isHeader: 0
+          isHeader: 0,
+          pos: null!,
+          placeId: null!
         }
       }
     }

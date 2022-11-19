@@ -45,7 +45,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import { Database } from "@/types";
+import { Database, ElementUI } from "@/types";
 import { numberConvert } from "~/helpers";
 
 export default Vue.extend({
@@ -61,7 +61,7 @@ export default Vue.extend({
         percent: null as null | number,
         summa: null as null | number,
         placeId: ''
-      },
+      } as Database.IDiscountRule,
       rules: {
         percent: [
           { required: true, message: 'Выберите процент', trigger: 'blur' }
@@ -69,34 +69,33 @@ export default Vue.extend({
         summa: [
           { required: true, message: 'Выберите сумму', trigger: 'blur' }
         ]
-      }
+      } as ElementUI.Form.IRules
     }
   },
   methods: {
     numberConvert,
-    async addDiscountRule() {
-      return await this.$store.dispatch('database/discount-rules/add', this.formData);
+    async addDiscountRule(): Promise<boolean> {
+      return this.$store.dispatch('database/discount-rules/add', this.formData);
     },
-    async editDiscountRule() {
-      return await this.$store.dispatch('database/discount-rules/update', this.formData);
+    async editDiscountRule(): Promise<boolean> {
+      return this.$store.dispatch('database/discount-rules/update', this.formData);
     },
-    async removeDiscountRule(id) {
-      await this.$store.dispatch('database/discount-rules/remove', id);
+    async removeDiscountRule(id): Promise<boolean> {
+      return this.$store.dispatch('database/discount-rules/remove', id);
     },
-    async moveDiscountRule({ newPos, el }) {
-      await this.$store.dispatch('database/discount-rules/move', { newPos, el });
+    async moveDiscountRule({ newPos, el }): Promise<boolean> {
+      return this.$store.dispatch('database/discount-rules/move', { newPos, el });
     },
     updateDataEditPopup(discountRule: Database.IDiscountRule) {
       if (discountRule) {
-        const { id, summa, percent, placeId } = discountRule;
-
-        this.formData = { id, summa, percent, placeId}
+        this.formData = discountRule;
       }
       else {
         this.formData = {
           id: '',
-          percent: null,
-          summa: null,
+          pos: 0,
+          percent: null!,
+          summa: null!,
           placeId: this.placeId
         }
       }
