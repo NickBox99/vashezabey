@@ -1,6 +1,5 @@
-import Vue, {h} from "vue";
-import { Database, Smsc } from "~/types";
-import { getPosElementDB } from "~/helpers";
+import Vue from "vue";
+import { Database } from "~/types";
 
 export default {
   async getAll({ dispatch }: Database.IStore): Promise<Database.History.IUser[]> {
