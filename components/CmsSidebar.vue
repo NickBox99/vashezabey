@@ -111,7 +111,8 @@ export default Vue.extend({
             { route: 'cms-stocks', title: 'Акции', component: 'el-menu-item' },
             { route: 'cms-rules', title: 'Правила', component: 'el-menu-item' },
             { route: 'cms-discount-rules', title: 'Программа лояльности', component: 'el-menu-item' },
-            { route: 'cms-promo-codes', title: 'Промокоды', component: 'el-menu-item' }
+            { route: 'cms-promo-codes', title: 'Промокоды', component: 'el-menu-item' },
+            { route: 'cms-qr-codes', title: 'QR коды', component: 'el-menu-item' }
           ]
         },
         { route: 'settings', icon: 'setting', title: 'Настройки', component: 'el-submenu',

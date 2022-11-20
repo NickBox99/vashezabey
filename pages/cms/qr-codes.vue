@@ -1,34 +1,33 @@
 <template>
 <div class="settings">
-  <h2 class="settings__title">Настройки ({{ placeName }})</h2>
-
   <el-form ref="form" :rules="rules" :model="formData">
-    <el-form-item prop="phone" class="settings__field">
-      <span class="settings__label" slot="label">Телефон для связи</span>
-
-      <el-input v-model="formData.phone" v-mask-phone>
-        <i slot="prefix" class="el-input__icon el-icon-place"></i>
-      </el-input>
-    </el-form-item>
-
     <el-form-item prop="reviewLink" class="settings__field">
-      <span class="settings__label" slot="label">Ссылка для отзывов</span>
+      <span class="settings__label" slot="label">Заведение</span>
 
-      <el-input v-model="formData.reviewLink">
+      <el-select v-model="placeId" filterable>
         <i slot="prefix" class="el-input__icon el-icon-place"></i>
-      </el-input>
+        <el-option
+          v-for="item in places"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
     </el-form-item>
 
     <el-form-item prop="instagram" class="settings__field">
-      <span class="settings__label" slot="label">Профиль инстаграм</span>
+      <span class="settings__label" slot="label">№ стола</span>
 
-      <el-input v-model="formData.instagram">
+      <el-input v-model="formData.table">
         <i slot="prefix" class="el-input__icon el-icon-place"></i>
       </el-input>
     </el-form-item>
 
-    <el-button type="secondary" @click="onSubmit">Сохранить</el-button>
+    <el-button type="secondary" @click="onSubmit">Скачать</el-button>
   </el-form>
+
+
+  <div id="qrcode"></div>
 </div>
 </template>
 
@@ -39,16 +38,17 @@ import {Database, ElementUI} from "~/types";
 import {getResultFormValidate} from "~/helpers";
 
 export default Vue.extend({
-  name: "cms-settings",
+  name: "qr-codes",
   layout: "cms",
   asyncData({ store }) {
+    //this.places = (await this.$store.dispatch('database/places/getAll')).map(({ id, name }: Database.IPlace) => ({ label: name, value: id }));
     const { phone, reviewLink, instagram } = store.getters["settings/get"];
     return {
       formData: {
         phone,
         reviewLink,
         instagram
-      } as Database.IPlace
+      } as Database.IPlace,
     }
   },
   data() {
