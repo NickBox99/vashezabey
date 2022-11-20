@@ -34,5 +34,9 @@ export default {
     return false;
   },
 
-  logout() {}
+  logout() {
+    (this as unknown as {
+      $cookies: NuxtCookies
+    }).$cookies.remove('uid');
+  }
 }

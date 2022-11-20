@@ -2,6 +2,6 @@ import { Database } from "~/types";
 
 export default {
   getAll(state, getters, rootState, rootGetters): Database.ICategory[] {
-    return rootGetters['cache/get']('hookahAdditional');
+    return rootGetters['cache/get']('hookahGeneral');
   }
 }

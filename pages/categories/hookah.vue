@@ -8,8 +8,8 @@
       </div>
 
       <div class="hookah__hookah-price">
-        <menu-item name="Стоимость первого кальяна" :price="`${ pricesHookahs[0] } руб`" :icon-visible="false"/>
-        <menu-item name="Стоимость второго кальяна" :price="`${ pricesHookahs[1] } руб`" :icon-visible="false"/>
+        <menu-item name="Стоимость первого кальяна" :price="`${ pricesHookahs.firstPriceHookah } руб`" :icon-visible="false"/>
+        <menu-item name="Стоимость второго кальяна" :price="`${ pricesHookahs.secondPriceHookah } руб`" :icon-visible="false"/>
       </div>
     </div>
 
@@ -37,12 +37,13 @@
 
 <script lang="ts">
 import Vue from "vue";
+import {Database} from "~/types";
 
 export default Vue.extend({
   name: "categories-hookah",
   async asyncData({ store }) {
     return {
-      pricesHookahs: await store.dispatch('database/getPricesHookahs'),
+      pricesHookahs: await store.dispatch('database/categories/hookah/general/get') as Database.IHookahGeneral,
       fruitHookahs: await store.dispatch('database/categories/hookah/fruity/getAll'),
       corkageFees: await store.dispatch('database/categories/hookah/corkage-fees/getAll'),
       additionallyHookahs: await store.dispatch('database/categories/hookah/additional/getAll')

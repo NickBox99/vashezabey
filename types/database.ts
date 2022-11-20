@@ -47,6 +47,14 @@ export namespace Database {
     "user"
   }
 
+  export interface IHookahGeneral {
+    id: string,
+    pos: number,
+    firstPriceHookah: number,
+    secondPriceHookah: number,
+    placeId: string
+  }
+
   export interface IUser {
     id: string,
     pos: number,

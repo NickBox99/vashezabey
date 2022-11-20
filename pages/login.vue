@@ -140,7 +140,7 @@ export default Vue.extend({
         return;
       }
 
-      const response = await this.$smsc.sendCode(this.phoneFormatted);
+      const response = (await this.$fb.common.get())!.balance >= 5 ? await this.$smsc.sendCode(this.phoneFormatted) : false;
 
       if (response) {
         const { code, message } = response;
@@ -148,6 +148,8 @@ export default Vue.extend({
         this.sentCode = code;
         this.isShowPopup = true;
         this.currentCode = '';
+
+        await this.$fb.common.decreaseBalance(5);
       }
       else {
         this.$notify({

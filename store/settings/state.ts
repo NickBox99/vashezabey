@@ -7,5 +7,9 @@ export default () : Settings.Store.IState => ({
     instagram: '',
     reviewLink: '',
     phone: ''
+  },
+
+  common: {
+    balance: 0
   }
 })

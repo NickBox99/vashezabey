@@ -3,8 +3,11 @@
            :router="true"
            :default-active="$route.name"
   >
-    <div class="sidebar__header">ВащеЗабей</div>
-
+    <div class="sidebar__header">ВащеЗабей
+      <el-tooltip content="Выйти из аккаунта" placement="bottom">
+        <el-button type="primary" @click="logout">Выйти</el-button>
+      </el-tooltip>
+    </div>
     <component
       v-for="item in items"
       :is="item.component"
@@ -63,6 +66,7 @@ export default Vue.extend({
           componentChildren: [
             { route: 'menu-hookah', icon: 'setting', title: 'Кальян', component: 'el-submenu',
               componentChildren: [
+                { route: 'cms-categories-hookah-general', title: 'Общее', component: 'el-menu-item' },
                 { route: 'cms-categories-hookah-fruity', title: 'Фруктовый', component: 'el-menu-item' },
                 { route: 'cms-categories-hookah-additional', title: 'Дополнительно', component: 'el-menu-item' },
                 { route: 'cms-categories-hookah-corkage-fees', title: 'Пробковый сбор', component: 'el-menu-item' }
@@ -117,6 +121,12 @@ export default Vue.extend({
           ]
         }
       ]
+    }
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch('auth/logout');
+      await this.$router.push('/login');
     }
   }
 })

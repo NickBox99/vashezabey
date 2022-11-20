@@ -1,13 +1,27 @@
 import { getDatabase, set, ref as refDatabase, get, child, push, update as fbUpdate, remove as fbRemove } from "firebase/database";
 import { getStorage, ref as refStorage, uploadBytes, getDownloadURL, deleteObject} from 'firebase/storage'
 import { sortArrayByPos } from "~/helpers";
-import { Database } from "@/types"
+import {Database, Settings} from "@/types"
 
 type IImageFile = (Blob | Uint8Array | ArrayBuffer) & { uid: string };
 
 class Firebase {
   database = getDatabase();
   storage = getStorage();
+
+  common = {
+    get: () => this.get<Settings.ICommon>('common'),
+    decreaseBalance: async (sum: number) => {
+      const common = await this.common.get();
+
+      if (common) {
+        await this.updateObj('common', {
+          ...common,
+          balance: common?.balance - sum
+        })
+      }
+    },
+  }
 
   history = {
     navigations: {
@@ -89,6 +103,11 @@ class Firebase {
       }
     },
     hookah: {
+      general: {
+        getAll: () => this.getArray<Database.IHookahGeneral>('hookah_general'),
+        update: (hookahGeneral: Database.IHookahGeneral) => hookahGeneral.id ? this.update('hookah_general', hookahGeneral) : this.add('hookah_general', hookahGeneral),
+      },
+
       additional: {
         add: (additional: Database.ICategory) => this.add<Database.ICategory>('hookah_additional', additional),
         getAll: () => this.getArray<Database.ICategory>('hookah_additional'),
@@ -277,6 +296,19 @@ class Firebase {
           ...newObj,
           id: databaseRef.key
         };
+      })
+      .catch(() => {
+          return null;
+        }
+      );
+  }
+
+  private async updateObj<T>(url: string, obj: T): Promise<T | null> {
+    const databaseRef = this.getRefDatabase(url);
+
+    return set(databaseRef, obj)
+      .then(() => {
+        return obj;
       })
       .catch(() => {
           return null;

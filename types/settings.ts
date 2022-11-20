@@ -4,7 +4,8 @@ export namespace Settings {
   export namespace Store {
 
     export interface IState {
-      settings: ISettings | null
+      settings: ISettings | null,
+      common: ICommon | null
     }
   }
 
@@ -22,5 +23,9 @@ export namespace Settings {
     id: number,
     percent: number,
     summa: number
+  }
+
+  export interface ICommon {
+    balance: number
   }
 }
