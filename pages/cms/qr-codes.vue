@@ -1,126 +1,95 @@
 <template>
-<div class="settings">
-  <el-form ref="form" :rules="rules" :model="formData">
-    <el-form-item prop="reviewLink" class="settings__field">
-      <span class="settings__label" slot="label">Заведение</span>
+<div class="qr-codes">
 
-      <el-select v-model="placeId" filterable>
-        <i slot="prefix" class="el-input__icon el-icon-place"></i>
-        <el-option
-          v-for="item in places"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-    </el-form-item>
+  <el-input class="qr-codes__field" placeholder="№ стола" v-model="table">
+    <el-select v-model="placeId" slot="prepend" placeholder="Заведение">
+      <el-option
+        v-for="item in places"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
+  </el-input>
 
-    <el-form-item prop="instagram" class="settings__field">
-      <span class="settings__label" slot="label">№ стола</span>
+  <qrcode-vue class="qr-codes__code" :value="urlQRCode" :size="300" level="M" ref="qrCode" />
 
-      <el-input v-model="formData.table">
-        <i slot="prefix" class="el-input__icon el-icon-place"></i>
-      </el-input>
-    </el-form-item>
-
-    <el-button type="secondary" @click="onSubmit">Скачать</el-button>
-  </el-form>
-
-
-  <div id="qrcode"></div>
+  <el-button class="qr-codes__btn" type="secondary" @click="onDownload">Скачать</el-button>
 </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import {mapGetters} from "vuex";
-import {Database, ElementUI} from "~/types";
-import {getResultFormValidate} from "~/helpers";
+import QrcodeVue from 'qrcode.vue/dist/qrcode.vue'
+import { Database, ElementUI } from "~/types";
 
 export default Vue.extend({
   name: "qr-codes",
   layout: "cms",
-  asyncData({ store }) {
-    //this.places = (await this.$store.dispatch('database/places/getAll')).map(({ id, name }: Database.IPlace) => ({ label: name, value: id }));
-    const { phone, reviewLink, instagram } = store.getters["settings/get"];
-    return {
-      formData: {
-        phone,
-        reviewLink,
-        instagram
-      } as Database.IPlace,
-    }
+  components:  {
+    QrcodeVue
+  },
+  async asyncData({ store }) {
+    const places = (await store.dispatch('database/places/getAll')).map(({ id, name }: Database.IPlace) => ({ label: name, value: id }));
+
+    return { places }
   },
   data() {
     return {
-      formData: {
-        phone: '',
-        reviewLink: '',
-        instagram: ''
-      } as Database.IPlace,
-
-      rules: {
-        phone: [
-          { required: true, message: 'Выберите телефон', trigger: 'blur' }
-        ],
-        reviewLink: [
-          { required: true, message: 'Выберите ссылку на отзывы', trigger: 'blur' }
-        ],
-        instagram: [
-          { required: true, message: 'Выберите инстаграм', trigger: 'blur' }
-        ]
-      } as ElementUI.Form.IRules
+      places: [] as ElementUI.ISelect[],
+      placeId: null as null | string,
+      table: null as null | number,
+      baseUrl: ''
     }
   },
+  mounted() {
+    this.baseUrl = window.location.origin;
+  },
   methods: {
-    async onSubmit() {
-      if (!getResultFormValidate(this.$refs.form as unknown as ElementUI.Form.IValidate)) {
-        return;
-      }
+    async onDownload() {
+      const image = (this.$refs.qrCode as unknown as { $refs: { 'qrcode-vue': HTMLCanvasElement } }).$refs['qrcode-vue'].toDataURL();
 
-      if(!this.placeId) return;
+      const tmpLink = document.createElement( 'a' );
+      tmpLink.download = `QrCode Стол - ${this.table}.png`;
+      tmpLink.href = image;
 
-      const isUpdated: boolean = await this.$store.dispatch('settings/update', { ...this.formData, id: this.placeId });
-
-      if (isUpdated) {
-        this.$notify({
-          title: 'Успешно',
-          message: 'Данные сохранены',
-          type: 'success'
-        });
-      }
-      else {
-        this.$notify({
-          title: 'Ошибка',
-          message: 'Системная ошибка',
-          type: 'error'
-        });
-      }
+      document.body.appendChild( tmpLink );
+      tmpLink.click();
+      document.body.removeChild( tmpLink );
     },
   },
   computed: {
-    ...mapGetters({
-      placeName: 'settings/getName',
-      placeId: 'settings/getId'
-    })
+    urlQRCode(): string {
+      return `${this.baseUrl}/?=table=${this.table}&place=${this.placeId}`
+    }
   }
 })
 </script>
 
 <style scoped lang="scss">
-.settings {
-
-  &__title {
-    margin-bottom: 10px;
-    font-size: 20px;
-  }
-
+.qr-codes {
   &__field {
-    max-width: 400px;
+    margin-bottom: 20px;
+
+    &::v-deep {
+      .el-input__inner {
+        width: 300px;
+      }
+
+      .el-select {
+        .el-input__inner, .el-input {
+          width: 150px;
+        }
+      }
+    }
   }
 
-  &__label {
-    color: var(--color-white)
+  &__code {
+    margin-bottom: 20px;
+  }
+
+  &__btn {
+    width: 300px;
   }
 }
 </style>
