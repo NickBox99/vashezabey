@@ -55,13 +55,31 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { Database } from "~/types";
+import { mapGetters } from "vuex";
 
 export default Vue.extend({
   name: "cms-sidebar",
-  data() {
-    return {
-      items: [
+  methods: {
+    async logout() {
+      await this.$store.dispatch('auth/logout');
+      await this.$router.push('/login');
+    }
+  },
+  computed: {
+    ...mapGetters({
+      userRole: 'auth/getUserRole'
+    }),
+    items() {
+      const items = [
         { route: 'cms', icon: 'menu', title: 'Главная', component: 'el-menu-item' },
+        { route: 'statistics', icon: 's-data', title: 'Статистика', component: 'el-submenu', permission: Database.IUserRole.adminPlus,
+          componentChildren: [
+            { route: 'cms-statistics-navigation', title: 'Навигация', component: 'el-menu-item' },
+            { route: 'cms-statistics-payment', title: 'Счета', component: 'el-menu-item' },
+            { route: 'cms-statistics-users', title: 'Пользователи', component: 'el-menu-item' }
+          ]
+        },
         { route: 'menu', icon: 's-unfold', title: 'Меню', component: 'el-submenu',
           componentChildren: [
             { route: 'menu-hookah', icon: 'setting', title: 'Кальян', component: 'el-submenu',
@@ -121,13 +139,9 @@ export default Vue.extend({
             { route: 'cms-places', title: 'Заведения', component: 'el-menu-item' }
           ]
         }
-      ]
-    }
-  },
-  methods: {
-    async logout() {
-      await this.$store.dispatch('auth/logout');
-      await this.$router.push('/login');
+      ];
+
+      return items.filter(item => item.permission === undefined || item.permission >= this.userRole);
     }
   }
 })

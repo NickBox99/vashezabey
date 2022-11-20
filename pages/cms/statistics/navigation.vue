@@ -1,10 +1,11 @@
 <template>
-$END$
+<div class="">123</div>
 </template>
 
 <script>
 export default {
-name: "navigation"
+  name: "cms-statistics-navigation",
+  layout: 'cms'
 }
 </script>
 
