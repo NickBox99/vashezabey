@@ -11,7 +11,7 @@
 <script>
 
 export default {
-  name: "coffee",
+  name: "categories-coffee",
   async asyncData({ store }) {
     return {
       items: await store.dispatch('database/categories/coffee/getAll')

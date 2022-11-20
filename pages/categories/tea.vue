@@ -21,7 +21,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "tea",
+  name: "categories-tea",
   async asyncData({ store }) {
     return {
       classicTeas: await store.dispatch('database/categories/tea/сlassic/getAll'),

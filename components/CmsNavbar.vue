@@ -93,6 +93,8 @@ export default Vue.extend({
       }
 
       if (await this.$store.dispatch('database/users/addAccumulated', this.formData)) {
+        await this.$store.dispatch('database/history/payment/add', this.formData);
+
         this.$notify({
           title: 'Успешно',
           message: 'Данные отправлены',

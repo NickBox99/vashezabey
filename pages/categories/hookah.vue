@@ -39,7 +39,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "hookah",
+  name: "categories-hookah",
   async asyncData({ store }) {
     return {
       pricesHookahs: await store.dispatch('database/getPricesHookahs'),

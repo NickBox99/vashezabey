@@ -6,8 +6,14 @@ export default {
     return dispatch('cache/getUseCache', { key: 'historyNavigations', fetchCallback: () => Vue.prototype.$fb.history.navigations.getAll() }, { root: true })
   },
 
-  async add({ commit }: Database.IStore, history: Database.History.INavigation) {
-    const result: boolean = await Vue.prototype.$fb.history.navigations.add(history);
+  async add({ commit, rootGetters }: Database.IStore, routeName: keyof Database.History.INavigationType) {
+    const result: boolean = await Vue.prototype.$fb.history.navigations.add({
+      id: null!,
+      type: Database.History.INavigationType[routeName],
+      dateTime: Date.now(),
+      placeId: rootGetters["settings/getId"],
+      userId: rootGetters["auth/getUserId"]
+    } as Database.History.INavigation);
 
     if (result) {
       commit('cache/add', { key: 'historyNavigations', value: result }, { root: true });

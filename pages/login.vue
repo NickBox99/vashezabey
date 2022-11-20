@@ -67,7 +67,7 @@
 import Vue from "vue";
 import { mapGetters } from "vuex";
 import { getResultFormValidate, phoneConvert } from "~/helpers";
-import { ElementUI } from "~/types";
+import {Database, ElementUI} from "~/types";
 
 export default Vue.extend({
   name: "login",
@@ -126,6 +126,8 @@ export default Vue.extend({
       }
 
       await this.$store.dispatch('auth/login', this.phoneFormatted);
+
+      await this.$store.dispatch('database/history/users/add', this.isLoginPage? Database.History.IUserType.login : Database.History.IUserType.registration);
       await this.$router.push('/discount');
     },
     async sendCode() {

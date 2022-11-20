@@ -1,4 +1,4 @@
-const headerConfig = new Map<string, { title: string, icon?: string }>([
+export const headerConfig = new Map<string, { title: string, icon?: string }>([
   ['categories-coffee', { title: 'Кофе', icon: 'coffee' }],
   ['categories-desserts', { title: 'Десерты', icon: 'desserts' }],
   ['categories-beverages', { title: 'Напитки', icon: 'beverages' }],
@@ -11,5 +11,3 @@ const headerConfig = new Map<string, { title: string, icon?: string }>([
   ['rules', { title: 'Наши правила' }],
   ['stocks', { title: 'Акции' }]
 ])
-
-export { headerConfig }

@@ -122,14 +122,24 @@ export namespace Database {
   export namespace History {
     interface IDefault {
       id: string,
-      date: number,
-      time: number,
+      dateTime: number,
       userId: string,
       placeId: string
     }
 
     export enum INavigationType {
-
+      'index',
+      'discount',
+      'login',
+      'profile',
+      'rules',
+      'stocks',
+      'categories-beverages',
+      'categories-coffee',
+      'categories-desserts',
+      'categories-hookah',
+      'categories-snacks',
+      'categories-tea'
     }
 
     export interface INavigation extends IDefault {
@@ -137,6 +147,7 @@ export namespace Database {
     }
 
     export interface IPayment extends IDefault {
+      clientId: string,
       summa: number
     }
 
