@@ -88,7 +88,7 @@ export default Vue.extend({
     },
     updateDataEditPopup(discountRule: Database.IDiscountRule) {
       if (discountRule) {
-        this.formData = discountRule;
+        this.formData = { ...discountRule };
       }
       else {
         this.formData = {

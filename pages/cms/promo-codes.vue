@@ -98,7 +98,7 @@ export default Vue.extend({
     },
     updateDataEditPopup(promoCode: Database.IPromoCode) {
       if (promoCode) {
-        this.formData = promoCode;
+        this.formData = { ...promoCode };
       }
       else {
         this.formData = {

@@ -51,5 +51,14 @@ export default {
     }
 
     return dispatch('update', { id: el.id, pos });
+  },
+
+  async initCode({ dispatch }, code: string) {
+    const promoCodes: Database.IPromoCode[] = await dispatch('getAll');
+
+    const nowDate = Date.now();
+    const promoCode = promoCodes.find(promo => promo.code === code && promo.validity >= nowDate);
+
+    return promoCode? promoCode.discount : null;
   }
 }

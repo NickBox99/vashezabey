@@ -37,7 +37,7 @@ export default Vue.extend({
   data() {
     return {
       isShowPopup: false,
-      promoCode: null as null | string
+      promoCode: '' as null | string
     }
   },
   methods: {
@@ -45,11 +45,24 @@ export default Vue.extend({
       this.isShowPopup = true;
     },
     async onSubmit() {
-      this.$notify({
-        title: 'Промокод',
-        message: 'Истек срок годности',
-        type: 'error'
-      });
+      const result = await this.$store.dispatch('database/promo-codes/initCode', this.promoCode);
+
+      if (result) {
+        this.$emit('update-discount', result);
+        this.$notify({
+          title: 'Успешно',
+          message: 'Код автивирован',
+          type: 'success'
+        });
+        this.isShowPopup = false;
+      }
+      else {
+        this.$notify({
+          title: 'Промокод',
+          message: 'Код недействителен',
+          type: 'error'
+        });
+      }
     }
   },
   computed: {

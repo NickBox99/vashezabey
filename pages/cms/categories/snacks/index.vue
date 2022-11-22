@@ -128,7 +128,7 @@ export default Vue.extend({
     },
     updateDataEditPopup(category: Database.ICategory) {
       if (category) {
-        this.formData = category
+        this.formData = { ...category };
       }
       else {
         this.formData = {

@@ -13,7 +13,9 @@
       <div>Обновлено: {{ dateConvert(user.accumulateUpdated) }}</div>
     </div>
 
-    <discount-bonus class="discount__discount-bonus"/>
+    <discount-bonus class="discount__discount-bonus"
+      @update-discount="updateDiscount"
+    />
     <accumulate-interest
       :accumulate-interests="discountRules"
     />
@@ -42,7 +44,10 @@ export default Vue.extend({
     }
   },
   methods: {
-    dateConvert
+    dateConvert,
+    updateDiscount(val: number) {
+      this.nowDiscount = val;
+    }
   },
   computed: {
     ...mapGetters({

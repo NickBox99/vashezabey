@@ -156,7 +156,7 @@ export default Vue.extend({
     updateDataEditPopup(stock: Database.IStock) {
       if (stock) {
         const { imageId, imageUrl } = stock;
-        this.formData = stock;
+        this.formData = { ...stock };
 
         this.previewFile = imageUrl;
         this.fileListPreview = [{ name: imageId, url: imageUrl }];

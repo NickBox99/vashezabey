@@ -97,7 +97,7 @@ export default Vue.extend({
     },
     updateDataEditPopup(place: Database.IPlace) {
       if (place) {
-        this.formData = place;
+        this.formData = { ...place };
       }
       else {
         this.formData = {

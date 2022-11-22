@@ -207,7 +207,7 @@ export default Vue.extend({
     },
     updateDataEditPopup(user: Database.IUser) {
       if (user) {
-        this.formData = user;
+        this.formData = { ...user };
       }
       else {
         this.formData = {

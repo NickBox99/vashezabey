@@ -65,7 +65,7 @@ export default Vue.extend({
     },
     updateDataEditPopup(rule: Database.IRule) {
       if (rule) {
-        this.formData = rule
+        this.formData = { ...rule };
       }
       else {
         this.formData = {
