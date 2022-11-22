@@ -27,12 +27,12 @@ export default Vue.extend({
       default: null
     },
     isAvailable: {
-      type: Boolean,
-      default: true
+      type: Number,
+      default: 1
     },
     isIconVisible: {
-      type: Boolean,
-      default: true
+      type: Number,
+      default: 1
     }
   },
   methods: {
