@@ -14,6 +14,8 @@ export default {
     ]
   },
 
+  components: true,
+
   css: [
     'element-ui/lib/theme-chalk/index.css', '@/assets/css/main.scss'
   ],
@@ -24,10 +26,13 @@ export default {
     '@/plugins/directive.client',
     '@/plugins/smsc',
     '@/plugins/cryptoJS',
-    '@/plugins/messenger'
+    '@/plugins/messenger',
+    {src: '~/plugins/chart.ts', mode: 'client'}
   ],
 
-  components: true,
+  build: {
+    transpile: [/^element-ui/]
+  },
 
   buildModules: [
     '@nuxt/typescript-build'
@@ -36,14 +41,6 @@ export default {
   modules: [
     'cookie-universal-nuxt'
   ],
-
-  build: {
-    transpile: [/^element-ui/]
-  },
-
-  rules: {
-
-  },
 
   router: {
     middleware: ['auth', 'navigation']

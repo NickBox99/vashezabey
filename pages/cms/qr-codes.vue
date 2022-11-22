@@ -71,15 +71,13 @@ export default Vue.extend({
   &__field {
     margin-bottom: 20px;
 
-    &::v-deep {
-      .el-input__inner {
-        width: 300px;
-      }
+    &::v-deep(.el-input__inner) {
+      width: 300px;
+    }
 
-      .el-select {
-        .el-input__inner, .el-input {
-          width: 150px;
-        }
+    &::v-deep(.el-select) {
+      .el-input__inner, .el-input {
+        width: 150px;
       }
     }
   }
