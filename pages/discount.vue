@@ -11,6 +11,7 @@
       <div class="discount__info" v-else>У вас персональная скидка</div>
 
       <div>Обновлено: {{ dateConvert(user.accumulateUpdated) }}</div>
+      <div>Ваш персональный код: {{ user.cardId }}</div>
     </div>
 
     <discount-bonus class="discount__discount-bonus"
