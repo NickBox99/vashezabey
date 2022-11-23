@@ -11,6 +11,8 @@
   - vuex
 - Backend
   - firebase
+- Testing
+  - Jest
 - Integration
   - smsc
   - telegram
@@ -31,6 +33,8 @@
   - vuex
 - Backend
   - firebase
+- Тесты
+  - Jest
 - Интеграция
   - smsc
   - telegram
