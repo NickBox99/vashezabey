@@ -60,7 +60,7 @@ export default Vue.extend({
   layout: 'cms',
   async asyncData({ store }) {
     function decreaseSize(arr: (Database.History.INavigation | Database.History.IUser | Database.History.IPayment)[]) {
-      const newArr = JSON.parse(JSON.stringify(arr));
+      const newArr = JSON.parse(JSON.stringify(arr)).reverse();
       if (newArr.length > 5) {
         newArr.length = 5;
       }
