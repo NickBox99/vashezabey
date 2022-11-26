@@ -6,10 +6,12 @@
                :key="link.title"
                :to="link.to"
     >
+
       <img width="24" height="24" class="footer__icon"
            :src="require(`~/assets/img/icons/${link.icon}.svg`)"
            :alt="link.title"
-      >
+      />
+
       <div class="footer__title">{{ link.title }}</div>
     </nuxt-link>
   </div>
